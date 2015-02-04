@@ -1,0 +1,89 @@
+body {
+	/*width: 860px;*/
+	/*font: .9em arial;*/
+	line-height: 1.5;
+	padding: 10px;
+}
+fieldset {
+	margin: 10px 0 10px 0;
+}
+input[type="button"] {
+	margin-top: 10px;
+}
+#tiny {
+	max-width: 800px;
+}
+#tiny  textarea {
+	display: block;
+	width: 100%;
+}
+#generate {
+	/*float: right;*/
+	margin: 10px 0 10px 0;
+}
+#data_preview {
+	border: 1px solid #e5e5e5;
+	min-height: 400px;
+}
+#answer {
+	display: none;
+}
+.tab-pane {
+	margin-top: 20px;
+}
+.hidden {
+	display: none;
+}
+.yellow {
+	background-color: #ecf42b;
+}
+.green {
+	background-color: #00ea4d;
+}
+.pink {
+	background-color: #ff00b4;
+}
+.blue {
+	background-color: #00a0d8;
+}
+.orange {
+	background-color: #ffb956;
+}
+.red {
+	background-color: #ff6f79;
+}
+.white {
+	background-color: #ffffff;
+}
+.buttons div {
+	display: inline-block;
+	width: 120px;
+    /*height: 35px;*/
+	border: 1px solid gray;
+	padding: 4px;
+	margin-right: 5px;
+}
+.buttons textarea,
+.buttons img {
+	vertical-align: top;
+}
+.buttons textarea {
+	width: 70px;
+	height: 35px;
+	margin-left: 4px;
+	font-size: .6em;
+}
+.highlightable {
+	cursor: text;
+}
+.noevents {
+	pointer-events: none;
+}
+.noselect {
+	-webkit-touch-callout: none;
+	-webkit-user-select: none;
+	-khtml-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	user-select: none;
+}

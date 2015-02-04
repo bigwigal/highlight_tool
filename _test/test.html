@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+	<meta charset="UTF-8">
+	<title></title>
+
+	<script type="text/javascript" src="../js/jquery-1.11.2.min.js"></script>
+</head>
+<body>
+<div id="dummy_html">
+	<h1>HTML Ipsum Presents</h1>
+
+	<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+
+	<h2>Header Level 2</h2>
+
+	<ol>
+		<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+		<li>Aliquam tincidunt mauris eu risus.</li>
+	</ol>
+
+	<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+
+	<h3>Header Level 3</h3>
+
+	<ul>
+		<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+		<li>Aliquam tincidunt mauris eu risus.</li>
+	</ul>
+		<pre>
+			<code>
+			#header h1 a {
+			display: block;
+			width: 300px;
+			height: 80px;
+			}
+		</code>
+	</pre>
+</div>
+
+<input type="button" name="span" value="Span" />
+
+<div id="original">
+	<h1>HTML Ipsum Presents</h1>
+
+	<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+
+	<h2>Header Level 2</h2>
+
+	<ol>
+		<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+		<li>Aliquam tincidunt mauris eu risus.</li>
+	</ol>
+
+	<blockquote><p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus magna. Cras in mi at felis aliquet congue. Ut a est eget ligula molestie gravida. Curabitur massa. Donec eleifend, libero at sagittis mollis, tellus est malesuada tellus, at luctus turpis elit sit amet quam. Vivamus pretium ornare est.</p></blockquote>
+
+	<h3>Header Level 3</h3>
+
+	<ul>
+		<li>Lorem ipsum dolor sit amet, consectetuer adipiscing elit.</li>
+		<li>Aliquam tincidunt mauris eu risus.</li>
+	</ul>
+		<pre>
+			<code>
+			#header h1 a {
+			display: block;
+			width: 300px;
+			height: 80px;
+			}
+		</code>
+	</pre>
+</div>
+
+<script>
+$(document).ready(function() {
+	spanCharacters('#dummy_html');
+
+	$('input[name=span]').on('click', function() {
+		spanCharacters('#dummy_html');
+	});
+});
+
+function spanCharacters(element) {
+	$(element).contents().each(function() {
+		if (this.nodeName.toLowerCase() !== 'span') {
+			if (this.nodeType === 1) {
+				spanCharacters(this);
+			}
+			else if (this.nodeType === 3) {
+				var str = this.nodeValue;
+
+				$(this).replaceWith($.map(str.split(''), function(c, i) {
+					var code = str.charCodeAt(i);
+
+					if (code === 9 || code === 10) {
+						return c;
+					}
+
+					return '<span>' + c + '</span>';
+				}).join(''));
+			}
+		}
+	});
+}
+
+
+</script>
+
+</body>
+</html>
