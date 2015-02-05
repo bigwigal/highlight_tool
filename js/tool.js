@@ -8,50 +8,51 @@ $(document).ready(function() {
     GLOBAL.highlightType = $('select[name="type"] option:selected').val();
     GLOBAL.spaceSelection = $('select[name="space_selection"] option:selected').val();
 
-    console.log(GLOBAL);
+    //console.log(GLOBAL);
 
     $('a[href="#highlight_tab"]').on('show.bs.tab', generateText);
     $('a[href="#highlight_tab"]').on('hide.bs.tab', saveHighlightData);
-    $('a[href="#editor"]').on('show.bs.tab', editText);
-    $('a[href="#preview"]').on('show.bs.tab', generatePreview);
+    $('a[href="#editor_tab"]').on('show.bs.tab', editText);
+    $('a[href="#preview_tab"]').on('show.bs.tab', generatePreview);
     $('#generate').on('click', generateJSON);
     $('#data').on('change', handleFileSelect);
     $('#upload').on('click', uploadJSON);
 
     $('select[name="space_selection"]').on('change', handleSpaces);
+    $('input[name="sample"]').on('click', function() { GLOBAL.$tiny.html($('#sample_html').html()); });
     $('input[name="drag"]').on('change', function() { GLOBAL.dragging = !GLOBAL.dragging; });
     $('input[name="eraser"]').on('change', function() { GLOBAL.eraser = !GLOBAL.eraser; });
     $('input[name="spaces"]').on('change', function() { GLOBAL.markSpaces = !GLOBAL.markSpaces; });
     $('input[name="punctuation"]').on('change', function() { GLOBAL.markPunctuation = !GLOBAL.markPunctuation; });
     $('select[name="type"]').on('change', function() { GLOBAL.highlightType = $(this).val(); });
+
 });
 
-function saveHighlightData() {
-    var $questionText = $('#highlight').clone();
+function initTiny() {
+    GLOBAL.$tiny = $('#tiny textarea');
 
-    GLOBAL.pens = getPensInUse();
-
-    $.each(GLOBAL.pens, function(i, val) {
-        $questionText.find('span').removeClass(val);
+    GLOBAL.$tiny.tinymce({
+        script_url : 'tinymce/tinymce.min.js',
+        height: 400,
+        verify_html : false,
+        entity_encoding: 'raw',
+        plugins: [
+            'advlist autolink lists link image charmap print preview anchor',
+            'searchreplace visualblocks code fullscreen',
+            'insertdatetime media table contextmenu paste'
+        ],
+        toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | link image | code',
+        setup: function(ed) {
+            ed.on('change', function(e) {
+                console.log('tiny changed');
+            });
+        }
     });
 
-    GLOBAL.question = encodeURI($questionText.html());
-    GLOBAL.answer = encodeURI($('#highlight').html());
-
-    console.log(GLOBAL);
-}
-
-function generatePreview() {
-    var buttonHTML = getButtonHTML(GLOBAL.pens);
-
-    $('#preview .buttons').html(buttonHTML);
-
-    initActivity();
+    //GLOBAL.$tiny.html($('#sample_html').html());
 }
 
 function spanCharacters(el) {
-    console.log('spanning');
-
     $(el).contents().each(function() {
         if (this.nodeName.toLowerCase() !== 'span') {
             if (this.nodeType === 1) {
@@ -70,6 +71,11 @@ function spanCharacters(el) {
                     return '<span>' + c + '</span>';
                 }).join(''));
             }
+        }
+        else if (this.innerHTML.length > 1) {
+            spanCharacters(this);
+
+            $(this).contents().unwrap();
         }
     });
 
@@ -96,27 +102,46 @@ function classNonAlphaNumericChars() {
     });
 }
 
-function initTiny() {
-    GLOBAL.$tiny = $('#tiny textarea');
+function saveHighlightData() {
+    var $questionText = $('#highlight').clone();
 
-    GLOBAL.$tiny.tinymce({
-        script_url : 'tinymce/tinymce.min.js',
-        height: 400,
-        verify_html : false,
-        entity_encoding: 'raw',
-        plugins: [
-            'advlist autolink lists link image charmap print preview anchor',
-            'searchreplace visualblocks code fullscreen',
-            'insertdatetime media table contextmenu paste'
-        ],
-        toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | link image | code'
+    GLOBAL.pens = getPensInUse();
+
+    $.each(GLOBAL.pens, function(i, val) {
+        $questionText.find('span').removeClass(val);
     });
 
-    GLOBAL.$tiny.html($('#dummy_html').html());
+    GLOBAL.question = encodeURI($questionText.html());
+    GLOBAL.answer = encodeURI($('#highlight').html());
+
+    //console.log(GLOBAL);
 }
+
+function generatePreview() {
+    var buttonHTML = getButtonHTML(GLOBAL.pens);
+
+    $('#preview_tab .buttons').html(buttonHTML);
+
+    initActivity();
+}
+
+
+//Text editor hide - save html to GLOBAL.$tiny (don't allow unless data to save)
+//Text editor show - populate with GLOBAL.answer || GLOBAL.$tiny if not set?? Encoding???
+
+//Highlight hide - save all related data to GLOBAL
+//Highlight show - load data
+
+//Preview show - load data
+
+//Upload - events on buttons only.
+
 
 function generateText() {
     var tinyHTML = GLOBAL.$tiny.html();
+
+    $('a[href="#preview_tab"]').parent().removeClass('disabled');
+
     $('#highlight').html(tinyHTML);
 
     spanCharacters('#highlight');
@@ -129,9 +154,9 @@ function generateText() {
 }
 
 function editText() {
-    var highlightHTML = $('#highlight').html();
+    //var highlightHTML = $('#highlight').html();
 
-    GLOBAL.$tiny.html(highlightHTML);
+    GLOBAL.$tiny.html(decodeURI(GLOBAL.answer));
 }
 
 function generateJSON() {
@@ -207,16 +232,6 @@ function handleSpaces(e) {
         $spaces.addClass('noevents');
     }
 }
-
-
-
-
-
-
-
-
-
-
 
 
 
