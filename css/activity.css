@@ -54,20 +54,31 @@ input[type="button"] {
 }
 .buttons div {
 	display: inline-block;
-    /*height: 35px;*/
-	border: 1px solid gray;
+	vertical-align: top;
+	/*height: 35px;*/
+	border: 1px solid #999999;
 	padding: 4px;
 	margin-right: 5px;
 }
-.buttons textarea,
-.buttons img {
+.buttons img,
+.buttons span,
+.buttons textarea {
 	vertical-align: top;
 }
-.buttons textarea {
+.colourbutton div {
+	/*display: block;*/
 	width: 70px;
-	height: 35px;
 	margin-left: 4px;
-	font-size: .6em;
+	word-wrap: break-word;
+}
+.buttons textarea {
+	width: 100%;
+	margin-top: 4px;
+	resize: none;
+	/*width: 70px;*/
+	/*height: 35px;*/
+	/*margin-left: 4px;*/
+	/*font-size: .6em;*/
 }
 .disabled {
     pointer-events: none;

@@ -1,19 +1,25 @@
-var GLOBAL = {};
+var GLOBAL = {
+    currentColour: 'yellow',
+    dragging: true,
+    allPens: {
+        yellow: {},
+        green: {},
+        pink: {},
+        blue: {},
+        orange: {},
+        red: {}
+    },
+    pens: {},
+    eraser: true,
+    markSpaces: false,
+    markPunctuation: false,
 
-GLOBAL.currentColour = 'yellow';
-GLOBAL.dragging = true;
-GLOBAL.pens = [];
-GLOBAL.penLabels = [];
-GLOBAL.penColours = ['yellow', 'green', 'pink', 'blue', 'orange' , 'red'];
-GLOBAL.eraser = true;
-GLOBAL.markSpaces = false;
-GLOBAL.markPunctuation = false;
+    //used in tool only...
+    initialGenerate: true,
+    $spans: null,
+    $tiny: null
+};
 
-GLOBAL.initialGenerate = true;
-GLOBAL.$spans = null;
-GLOBAL.$tiny = null;
-
-//GLOBAL.uploadedJSON = null;
 
 var stops = {
 	character: [''],
@@ -22,20 +28,20 @@ var stops = {
 };
 
 
-$.getJSON('data.json', function(json) { //to be replaced with VLE.getAttachment
+$.getJSON('data.json', function(json) { //TODO replace with VLE.getAttachment
 	$(document).ready(function() {
-		if ($('title').text() !== 'Highlighting tool') {
+		if ($('title').text() !== 'Highlighting tool') { //TODO find better way to do this!
 			console.log('Not in the tool!');
 
 			setGlobalFromJSON(json);
 			initActivity();
 
-			var buttonHTML = getButtonHTML(GLOBAL.pens);
+			var buttonHTML = getButtonHTML();
 			$('.buttons').html(buttonHTML);
 		}
 
-		$('.highlightable').on('mousedown', 'span:not(.nohighlight)', highlight);
-		$('.highlightable').on('mouseleave mouseup', function() { $('.highlightable').off('mouseover', 'span'); });
+		$('.highlightable').on('mousedown', 'span:not(.block)', highlight);
+		$('.highlightable').on('mouseleave mouseup', function() { $('.highlightable').off('mouseover', 'span:not(.block)'); });
 		$('.highlightable').on('selectstart', function(e) { e.preventDefault(); });
 		$('#check').on('click', checkAnswer);
 		$('#reveal').on('click', revealAnswer);
@@ -45,9 +51,7 @@ $.getJSON('data.json', function(json) { //to be replaced with VLE.getAttachment
 
 });
 
-
-//if previous word/sentence/block highlighted in SAME colour highlight space and punctuation?
-//define blocks first?
+//TODO define handling of punctuation for word type
 
 /* Function to generate JSON. HTML page to have following options...
  * show all 6 pens but only add to JSON if used
@@ -76,12 +80,17 @@ function setGlobalFromJSON(json) {
 	});
 }
 
-function getButtonHTML(pens) {
-	var pens = pens || GLOBAL.penColours;
+function getButtonHTML(tool) {
+	var pens = tool ? GLOBAL.allPens : GLOBAL.pens;
 	var buttonHTML = '';
 
-	$.each(pens, function(i, val) {
-		buttonHTML += '<div id="' + val + '_pen" class="colourbutton" tabindex="1"><img alt="' + val + ' highlighter pen" src="images/' + val + '1.jpg" /></div>';
+	$.each(pens, function(key, val) {
+		var label = tool ? '<textarea class="pen_label" rows="2" maxlength="25" />' : '<div>' + val.label + '</div>';
+
+		buttonHTML += '<div id="' + key + '_pen" class="colourbutton" tabindex="1">' +
+			'<img alt="' + key + ' highlighter pen" src="images/' + key + '1.jpg" />' +
+			label +
+		'</div>';
 	});
 
 	buttonHTML += '<div id="eraser" class="eraserdiv" tabindex="1"><img src="images/eraser_load.jpg" alt="eraser" /></div>';
@@ -90,6 +99,47 @@ function getButtonHTML(pens) {
 }
 
 function highlight() {
+    var $toHighlight;
+
+    if (GLOBAL.highlightType === 'char') {
+        $toHighlight = $(this);
+    }
+    else {
+        $toHighlight = $(this).parents('.block').addClass('highlighted').find('span');
+
+		if (GLOBAL.spaceSelection === 'auto') {
+			var $thisBlock = $(this).parents('.block');
+			var $prevBlock = $thisBlock.prevAll('.block:first');
+			var $nextBlock = $thisBlock.nextAll('.block:first');
+
+			if ($prevBlock.length > 0 && $prevBlock.hasClass('highlighted')) {
+				$toHighlight = $toHighlight.add($thisBlock.prev());
+			}
+
+			if ($nextBlock.length > 0 && $nextBlock.hasClass('highlighted')) {
+				$toHighlight = $toHighlight.add($thisBlock.next());
+			}
+		}
+    }
+    if (GLOBAL.currentColour !== 'eraser') {
+        removeHighlight($toHighlight);
+
+		console.log($toHighlight);
+
+		$toHighlight
+            .addClass(GLOBAL.currentColour);
+
+        if (GLOBAL.dragging) {
+            $('.highlightable').on('mouseover', 'span:not(.block)', function () {
+                $(this).addClass(GLOBAL.currentColour);
+            });
+        }
+    } else {
+        removeHighlight($toHighlight);
+    }
+}
+
+function highlightOld() {
 	var $curr = $(this);
 	var $toHighlight;
 	var $prev;
@@ -172,11 +222,14 @@ function getSelection($span, start, end) {
 }
 
 function removeHighlight($s) {
-	$.each(GLOBAL.penColours, function(i, val) {
-		$s.removeClass(val);
+	var pens = GLOBAL.tool ? getPensInUse() : GLOBAL.pens;
+
+	$.each(pens, function(key, val) {
+		$s.removeClass(key);
 	});
 
-	console.log($s);
+	$('.block').removeClass('highlighted');
+
 	return $s;
 }
 
@@ -241,6 +294,7 @@ function reset() {
 		$spans.removeClass(val);
 	});*/
 	removeHighlight(GLOBAL.$spans);
+
 	$('#result').empty();
 }
 

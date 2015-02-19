@@ -1,11 +1,17 @@
+GLOBAL.tool = true;
+
 $(document).ready(function() {
     initTiny();
 
-    $('#highlight_tab .buttons').html(getButtonHTML());
+    $('#highlight_tab .buttons').html(getButtonHTML(true));
 
-    $('#highlight_tab .buttons div:not(#eraser)').append('<textarea name="pen_label" rows="2" />');
+    //$('#highlight_tab .buttons div:not(#eraser)').append('<textarea class="pen_label" rows="2" maxlength="25" />');
+    $('.buttons textarea').each(function() {
+        maxLength(this);
+    });
 
-    GLOBAL.highlightType = $('select[name="type"] option:selected').val();
+    //GLOBAL.highlightType = $('select[name="type"] option:selected').val();
+    GLOBAL.highlightType = 'sentence';
     GLOBAL.spaceSelection = $('select[name="space_selection"] option:selected').val();
 
     //console.log(GLOBAL);
@@ -19,14 +25,26 @@ $(document).ready(function() {
     $('#upload').on('click', uploadJSON);
 
     $('select[name="space_selection"]').on('change', handleSpaces);
-    $('input[name="sample"]').on('click', function() { GLOBAL.$tiny.html($('#sample_html').html()); });
+    $('input[name="sample"]').on('click', function() { GLOBAL.$tiny.html($('#sample_html').html()); }).trigger('click');
     $('input[name="drag"]').on('change', function() { GLOBAL.dragging = !GLOBAL.dragging; });
     $('input[name="eraser"]').on('change', function() { GLOBAL.eraser = !GLOBAL.eraser; });
     $('input[name="spaces"]').on('change', function() { GLOBAL.markSpaces = !GLOBAL.markSpaces; });
     $('input[name="punctuation"]').on('change', function() { GLOBAL.markPunctuation = !GLOBAL.markPunctuation; });
-    $('select[name="type"]').on('change', function() { GLOBAL.highlightType = $(this).val(); });
+    $('select[name="type"]').on('change', changeType);
 
 });
+
+function changeType() {
+    GLOBAL.highlightType = $(this).val();
+
+    $('#highlight').find('.block').each(function() {
+        $(this).children().unwrap();
+    });
+
+    $('#highlight span').removeAttr('tabindex');
+
+    spanBlocks('#highlight')
+}
 
 function initTiny() {
     GLOBAL.$tiny = $('#tiny textarea');
@@ -82,6 +100,96 @@ function spanCharacters(el) {
     GLOBAL.$spans = $('.highlightable span');
 }
 
+function spanBlocks(el) {
+    var $block = $();
+    //blocks defined by highlight type
+
+    //keep chars spanned to hold colour info when editing and switching between types
+    //remove at edit text and rerun at generate text (and each time the type is changed??)
+
+    //custom - this could be done post markup (leave until preview and then grab what's marked up )??
+
+    switch (GLOBAL.highlightType) {
+        case 'char':
+            $(el).find('span').attr('tabindex', '1');
+            break;
+        case 'word':
+            $(el).find('span').each(function() {
+                if (!$(this).hasClass('space')) {
+                    $block = $block.add($(this));
+                }
+                else {
+                    //check if last el is punct and chop if so??
+                    $block.wrapAll('<span class="block" tabindex="1"></span>');
+                    $block = $();
+                }
+            });
+            break;
+        case 'sentence':
+            $(el).children().each(function() {
+                if ($(this).css('display') !== 'inline') {
+                    spanBlocks(this);
+                }
+                else {
+                    var $parent = $(this).parent();
+                    var $stops = $parent.find('.stop');
+                    var noOfStops = $stops.length;
+
+                    if (noOfStops > 1) {
+                        $stops.each(function() {
+                            var $stop = $(this);
+                            var $stopParents = $stop.parents();
+
+                            $stopParents.each(function(i) {
+                                if ($(this).css('display') !== 'inline') {
+                                    if (i > 0) {
+                                        $stop = $stopParents.eq(i - 1); //first inline parent
+                                    }
+
+                                    $block = $stop.prevUntil('.block').addBack();
+
+                                    if ($block.first().hasClass('space')) {
+                                        $block = $block.not(':eq(0)');
+                                    }
+
+                                    $block.wrapAll('<span class="block" tabindex="1"></span>');
+
+                                    return false;
+                                }
+                            });
+                        });
+                    }
+                    else {
+                        $parent.wrapInner('<span class="block" tabindex="1"></span>');
+                    }
+                    return false;
+                }
+            });
+            break;
+        case 'para':
+            $(el).children().each(function() {
+                if ($(this).css('display') !== 'inline') {
+                    spanBlocks(this);
+                }
+                else {
+                    $(this).parent().wrapInner('<span class="block" tabindex="1"></span>');
+                    return false;
+                }
+            });
+            break;
+    }
+}
+
+function removeBlocks(html) {
+    var $html = $('<div></div>').html(html);
+
+    $html.find('.block').each(function() {
+        $(this).children().unwrap();
+    });
+
+    return $html.html();
+}
+
 function classNonAlphaNumericChars() {
     var specialChars = {
         space: ' ',
@@ -102,29 +210,22 @@ function classNonAlphaNumericChars() {
     });
 }
 
-function saveHighlightData() {
-    var $questionText = $('#highlight').clone();
-
-    GLOBAL.pens = getPensInUse();
-
-    $.each(GLOBAL.pens, function(i, val) {
-        $questionText.find('span').removeClass(val);
-    });
-
-    GLOBAL.question = encodeURI($questionText.html());
-    GLOBAL.answer = encodeURI($('#highlight').html());
-
-    //console.log(GLOBAL);
-}
-
-function generatePreview() {
-    var buttonHTML = getButtonHTML(GLOBAL.pens);
-
-    $('#preview_tab .buttons').html(buttonHTML);
-
-    initActivity();
-}
-
+//use spans to mark blocks
+// - char for single spans (not space and punct?)
+// - split on ' ' and wrap for words
+// - split on '.' and wrap for sentences
+// - all siblings for para
+//
+//handle spaces for all but para - if prev block selected highlight prevSpace
+//handle punctuation for words.
+//
+//remove all .word, .sent and .para spans on type change
+//
+//store the highlight colour in .char spans - if (.char) { highlight } bubble and stop propagation??
+//
+//spaces/punctuation hilightable - just turn events on/off, leave colour info until output (remove if not selectable)?
+//
+//always check .char (and .space/.punct) when checking answer?
 
 //Text editor hide - save html to GLOBAL.$tiny (don't allow unless data to save)
 //Text editor show - populate with GLOBAL.answer || GLOBAL.$tiny if not set?? Encoding???
@@ -140,12 +241,13 @@ function generatePreview() {
 function generateText() {
     var tinyHTML = GLOBAL.$tiny.html();
 
-    $('a[href="#preview_tab"]').parent().removeClass('disabled');
+    $('a[href="#preview_tab"]').parent().add('#preview_tab').removeClass('disabled');
 
     $('#highlight').html(tinyHTML);
 
     spanCharacters('#highlight');
     classNonAlphaNumericChars();
+    spanBlocks('#highlight');
 
     if (GLOBAL.initialGenerate) {
         $('a[href="#preview"]').parent().removeClass('disabled');
@@ -153,10 +255,41 @@ function generateText() {
     }
 }
 
-function editText() {
-    //var highlightHTML = $('#highlight').html();
+function saveHighlightData() {
+    var $questionText = $('#highlight').clone();
+    var pensUsed = getPensInUse();
 
-    GLOBAL.$tiny.html(decodeURI(GLOBAL.answer));
+    $.each(pensUsed, function(key, val) {
+        $questionText.find('span').removeClass(key);
+    });
+
+    GLOBAL.question = encodeURI($questionText.html());
+    GLOBAL.answer = encodeURI($('#highlight').html());
+
+    $('.pen_label').each(function() {
+        var labelText = this.value;
+        var penColour = this.parentNode.id.replace('_pen', '');
+
+        if (labelText.length > 0) {
+            GLOBAL.pens[penColour]['label'] = labelText;
+        }
+    });
+
+    //console.log(GLOBAL.pens);
+}
+
+function editText() {
+    var html = removeBlocks(decodeURI(GLOBAL.answer));
+
+    GLOBAL.$tiny.html(html);
+}
+
+function generatePreview() {
+    var buttonHTML = getButtonHTML();
+
+    $('#preview_tab .buttons').html(buttonHTML);
+
+    initActivity();
 }
 
 function generateJSON() {
@@ -208,15 +341,13 @@ function uploadJSON(e) {
 }
 
 function getPensInUse() {
-    var pensUsed = [];
-
-    $.each(GLOBAL.penColours, function(i, val) {
-        if ($('.' + val).length > 0) {
-            pensUsed.push(val);
+    $.each(GLOBAL.allPens, function(key, val) {
+        if ($('.' + key).length > 0) {
+            GLOBAL.pens[key] = val;
         }
     });
 
-    return pensUsed;
+    return GLOBAL.pens;
 }
 
 function handleSpaces(e) {
@@ -233,87 +364,11 @@ function handleSpaces(e) {
     }
 }
 
-
-
-
-
-
-
-function addSpans() {
-    $('.highlightable').each(function () {
-        var html = this.innerHTML;
-        var spanned = '';
-        var htmlChar = false;
-
-        for (i = 0; i < html.length; i++) {
-            var character = html.charAt(i);
-
-            console.log(character);
-
-            // Already spanned???????
-            // Find anything outside of a span????
-
-            if (character === '<') {
-                htmlChar = true;
-            }
-
-            if (!htmlChar) {
-                var span = '<span>' + character + '</span>';
-                spanned += span;
-            } else {
-                spanned += character;
-            }
-
-            if (character === '>') {
-                htmlChar = false;
-
-                if (html.charCodeAt(i + 1) === 10) {
-                    html = html.replace(html.charAt(i + 1), ''); //Replace LF as causing issues
-                }
-            }
-        }
-
-        this.innerHTML = spanned;
-    });
-
-    GLOBAL.$spans = $('.highlightable span');
-}
-
-function handleFileSelectOld(evt) {
-    var files = evt.target.files; // FileList object
-
-    // Loop through the FileList and render image files as thumbnails.
-    for (var i = 0, f; f = files[i]; i++) {
-
-        // Only process image files.
-        /*if (!f.type.match('image.*')) {
-         continue;
-         }*/
-
-        var reader = new FileReader();
-
-        // Closure to capture the file information.
-        reader.onload = (function(theFile) {
-            return function(e) {
-                //GLOBAL.uploadedJSON = JSON.parse(e.target.result);
-
-                $('#data_preview').html('<pre>' + e.target.result + '</pre>');
-            };
-        })(f);
-
-        // Read in the image file as a data URL.
-        reader.readAsText(f);
+function maxLength(el) {
+    if (!('maxLength' in el)) {
+        var max = el.attributes.maxLength.value;
+        el.onkeypress = function () {
+            if (this.value.length >= max) return false;
+        };
     }
 }
-
-String.prototype.escapeSpecialChars = function() {
-    console.log(this);
-    return this.replace(/[\"]/g, '\\"')
-        .replace(/[\\]/g, '\\\\')
-        .replace(/[\/]/g, '\\/')
-        .replace(/[\b]/g, '\\b')
-        .replace(/[\f]/g, '\\f')
-        .replace(/[\n]/g, '\\n')
-        .replace(/[\r]/g, '\\r')
-        .replace(/[\t]/g, '\\t');
-};
