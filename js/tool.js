@@ -1,17 +1,40 @@
-GLOBAL.tool = true;
+var GLOBAL = {
+    highlightType: null,
+    currentColour: 'yellow',
+    dragging: true,
+    allPens: {
+        yellow: {},
+        green: {},
+        pink: {},
+        blue: {},
+        orange: {},
+        red: {}
+    },
+    pens: {},
+    eraser: true,
+    spaceSelection: null,
+    markSpaces: false,
+    markPunctuation: false,
+
+    //used in tool only...
+    inTool: true,
+    initialGenerate: true,
+    $spans: null,
+    $tiny: null
+};
 
 $(document).ready(function() {
     initTiny();
 
-    $('#highlight_tab .buttons').html(getButtonHTML(true));
+    $('#highlight_tab .buttons').html(getButtonHTML());
 
     //$('#highlight_tab .buttons div:not(#eraser)').append('<textarea class="pen_label" rows="2" maxlength="25" />');
     $('.buttons textarea').each(function() {
         maxLength(this);
     });
 
-    //GLOBAL.highlightType = $('select[name="type"] option:selected').val();
     GLOBAL.highlightType = 'sentence';
+    //GLOBAL.highlightType = $('select[name="type"] option:selected').val();
     GLOBAL.spaceSelection = $('select[name="space_selection"] option:selected').val();
 
     //console.log(GLOBAL);
@@ -30,7 +53,7 @@ $(document).ready(function() {
     $('input[name="eraser"]').on('change', function() { GLOBAL.eraser = !GLOBAL.eraser; });
     $('input[name="spaces"]').on('change', function() { GLOBAL.markSpaces = !GLOBAL.markSpaces; });
     $('input[name="punctuation"]').on('change', function() { GLOBAL.markPunctuation = !GLOBAL.markPunctuation; });
-    $('select[name="type"]').on('change', changeType);
+    $('select[name="type"]').on('change', changeType); //TODO set standard configurations per type??
 
 });
 
@@ -196,46 +219,39 @@ function classNonAlphaNumericChars() {
         stop: '.',
         comma: ',',
         semi: ';',
-        colon: ':'
+        colon: ':',
+        question: '?',
+        exclamation: '!',
+        l_bracket: '(',
+        r_bracket: ')'
     };
 
     GLOBAL.$spans.each(function() {
         var s = this;
+        var c = s.innerHTML;
 
         $.each(specialChars, function(key, val) {
-            if (s.innerHTML === val && !$(s).hasClass(key)) {
-                s.className += key;
+            if (c === val && !$(s).hasClass(key)) {
+                if (c !== ' ') {
+                    $(s).addClass('punct');
+                }
+                $(s).addClass(key);
             }
         });
     });
 }
 
-//use spans to mark blocks
-// - char for single spans (not space and punct?)
-// - split on ' ' and wrap for words
-// - split on '.' and wrap for sentences
-// - all siblings for para
-//
-//handle spaces for all but para - if prev block selected highlight prevSpace
-//handle punctuation for words.
-//
-//remove all .word, .sent and .para spans on type change
-//
-//store the highlight colour in .char spans - if (.char) { highlight } bubble and stop propagation??
-//
-//spaces/punctuation hilightable - just turn events on/off, leave colour info until output (remove if not selectable)?
-//
-//always check .char (and .space/.punct) when checking answer?
+//TODO handle spaces for all but para - if prev block selected highlight prevSpace
 
-//Text editor hide - save html to GLOBAL.$tiny (don't allow unless data to save)
-//Text editor show - populate with GLOBAL.answer || GLOBAL.$tiny if not set?? Encoding???
+/**TODO check tab behaviour:
+    Text editor hide - save html to GLOBAL.$tiny (don't allow unless data to save)
+    Text editor show - populate with GLOBAL.answer || GLOBAL.$tiny if not set?? Encoding???
+    Highlight hide - save all related data to GLOBAL
+    Highlight show - load data
+    Preview show - load data
+**/
 
-//Highlight hide - save all related data to GLOBAL
-//Highlight show - load data
-
-//Preview show - load data
-
-//Upload - events on buttons only.
+//TODO CHECK: Upload - events on buttons only.
 
 
 function generateText() {
@@ -332,12 +348,12 @@ function handleFileSelect(e) {
 }
 
 function uploadJSON(e) {
-    //setGlobalFromJSON(GLOBAL.uploadedJSON);
     var uploadedJSON = $(e.target).data('json');
 
+    //TODO parse json to check it has correct properties?
     setGlobalFromJSON(uploadedJSON);
 
-    console.log(GLOBAL);
+    //console.log(GLOBAL);
 }
 
 function getPensInUse() {
@@ -353,7 +369,7 @@ function getPensInUse() {
 function handleSpaces(e) {
     var $spaces = $('.space');
 
-    console.log($spaces);
+    //console.log($spaces);
 
     if (e.target.value === 'manual') {
         $spaces.removeClass('noevents');

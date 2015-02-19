@@ -24,16 +24,35 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="tool.js" pinned="false" current-in-tab="false">
+      <file leaf-file-name="tool.js" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/js/tool.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="969" max-vertical-offset="2023">
-              <caret line="221" column="56" selection-start-line="221" selection-start-column="56" selection-end-line="221" selection-end-column="56" />
+            <state vertical-scroll-proportion="0.7271605" vertical-offset="1570" max-vertical-offset="4879">
+              <caret line="235" column="0" selection-start-line="235" selection-start-column="0" selection-end-line="235" selection-end-column="0" />
               <folding>
-                <element signature="e#50#1609#0" expanded="true" />
-                <element signature="e#291#323#0" expanded="true" />
+                <element signature="e#471#2072#0" expanded="true" />
+                <element signature="e#708#740#0" expanded="true" />
+                <element signature="n#!!block;n#changeType#0" expanded="true" />
+                <element signature="e#2194#2238#0" expanded="true" />
+                <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+                <element signature="e#3219#3932#0" expanded="true" />
+                <element signature="e#3525#3758#0" expanded="true" />
+                <element signature="n#!!block;n#generateText#0" expanded="true" />
                 <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-                <element signature="e#8881#9092#0" expanded="true" />
+                <element signature="e#8833#8893#0" expanded="true" />
+                <element signature="e#9044#9255#0" expanded="true" />
+                <element signature="n#!!block;n#editText#0" expanded="true" />
+                <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+                <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+                <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+                <element signature="e#10377#10634#0" expanded="true" />
+                <element signature="e#10406#10627#0" expanded="true" />
+                <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+                <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+                <element signature="e#10957#11049#0" expanded="true" />
+                <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+                <element signature="n#!!block;n#maxLength#0" expanded="true" />
+                <element signature="e#11488#11555#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -42,23 +61,32 @@
       <file leaf-file-name="index.html" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.html">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="301" max-vertical-offset="2380">
-              <caret line="72" column="70" selection-start-line="72" selection-start-column="20" selection-end-line="72" selection-end-column="70" />
+            <state vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="2380">
+              <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="activity.js" pinned="false" current-in-tab="true">
+      <file leaf-file-name="activity.js" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/js/activity.js">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.3074074" vertical-offset="1094" max-vertical-offset="2754">
-              <caret line="141" column="24" selection-start-line="141" selection-start-column="24" selection-end-line="141" selection-end-column="24" />
+            <state vertical-scroll-proportion="-14.068966" vertical-offset="0" max-vertical-offset="2448">
+              <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
               <folding>
-                <element signature="e#504#1264#0" expanded="true" />
-                <element signature="e#574#1259#0" expanded="true" />
-                <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-                <element signature="e#6470#6497#0" expanded="true" />
+                <element signature="e#66#775#0" expanded="true" />
+                <element signature="e#136#770#0" expanded="true" />
+                <element signature="n#!!block;n#initActivity#0" expanded="true" />
+                <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+                <element signature="e#1167#1198#0" expanded="true" />
+                <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+                <element signature="e#1345#1654#0" expanded="true" />
+                <element signature="n#!!block;n#highlight#0" expanded="true" />
+                <element signature="e#2788#3071#0" expanded="true" />
+                <element signature="e#3266#3293#0" expanded="true" />
+                <element signature="n#!!block;n#reset#0" expanded="true" />
+                <element signature="n#!!block;n#selectPen#0" expanded="true" />
+                <element signature="n#!!block;n#getSelection#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -86,10 +114,10 @@
         <option value="$PROJECT_DIR$/js/data.json" />
         <option value="$PROJECT_DIR$/activity.html" />
         <option value="$PROJECT_DIR$/_test/test.html" />
-        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/css/activity.css" />
-        <option value="$PROJECT_DIR$/js/tool.js" />
+        <option value="$PROJECT_DIR$/index.html" />
         <option value="$PROJECT_DIR$/js/activity.js" />
+        <option value="$PROJECT_DIR$/js/tool.js" />
       </list>
     </option>
   </component>
@@ -260,7 +288,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="85" y="0" width="1488" height="998" extended-state="1" />
+    <frame x="85" y="0" width="1488" height="998" extended-state="0" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -270,6 +298,8 @@
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Remote Host" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.26260504" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39907727" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
@@ -277,9 +307,7 @@
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
     </layout>
@@ -313,10 +341,29 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3774">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#50#1609#0" expanded="true" />
-            <element signature="e#291#323#0" expanded="true" />
+            <element signature="e#471#2072#0" expanded="true" />
+            <element signature="e#708#740#0" expanded="true" />
+            <element signature="n#!!block;n#changeType#0" expanded="true" />
+            <element signature="e#2194#2238#0" expanded="true" />
+            <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+            <element signature="e#3219#3932#0" expanded="true" />
+            <element signature="e#3525#3758#0" expanded="true" />
+            <element signature="n#!!block;n#generateText#0" expanded="true" />
             <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-            <element signature="e#8881#9092#0" expanded="true" />
+            <element signature="e#8833#8893#0" expanded="true" />
+            <element signature="e#9044#9255#0" expanded="true" />
+            <element signature="n#!!block;n#editText#0" expanded="true" />
+            <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+            <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+            <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+            <element signature="e#10377#10634#0" expanded="true" />
+            <element signature="e#10406#10627#0" expanded="true" />
+            <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+            <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+            <element signature="e#10957#11049#0" expanded="true" />
+            <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+            <element signature="n#!!block;n#maxLength#0" expanded="true" />
+            <element signature="e#11488#11555#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -334,10 +381,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="3026" max-vertical-offset="3791">
           <caret line="178" column="8" selection-start-line="178" selection-start-column="8" selection-end-line="178" selection-end-column="8" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -363,10 +419,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="816" max-vertical-offset="4437">
           <caret line="65" column="0" selection-start-line="65" selection-start-column="0" selection-end-line="65" selection-end-column="0" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -384,10 +449,29 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1411">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#50#1609#0" expanded="true" />
-            <element signature="e#291#323#0" expanded="true" />
+            <element signature="e#471#2072#0" expanded="true" />
+            <element signature="e#708#740#0" expanded="true" />
+            <element signature="n#!!block;n#changeType#0" expanded="true" />
+            <element signature="e#2194#2238#0" expanded="true" />
+            <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+            <element signature="e#3219#3932#0" expanded="true" />
+            <element signature="e#3525#3758#0" expanded="true" />
+            <element signature="n#!!block;n#generateText#0" expanded="true" />
             <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-            <element signature="e#8881#9092#0" expanded="true" />
+            <element signature="e#8833#8893#0" expanded="true" />
+            <element signature="e#9044#9255#0" expanded="true" />
+            <element signature="n#!!block;n#editText#0" expanded="true" />
+            <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+            <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+            <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+            <element signature="e#10377#10634#0" expanded="true" />
+            <element signature="e#10406#10627#0" expanded="true" />
+            <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+            <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+            <element signature="e#10957#11049#0" expanded="true" />
+            <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+            <element signature="n#!!block;n#maxLength#0" expanded="true" />
+            <element signature="e#11488#11555#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -405,10 +489,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="2686" max-vertical-offset="4522">
           <caret line="158" column="38" selection-start-line="158" selection-start-column="38" selection-end-line="158" selection-end-column="38" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -426,10 +519,29 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="170" max-vertical-offset="782">
           <caret line="10" column="41" selection-start-line="10" selection-start-column="41" selection-end-line="10" selection-end-column="41" />
           <folding>
-            <element signature="e#50#1609#0" expanded="true" />
-            <element signature="e#291#323#0" expanded="true" />
+            <element signature="e#471#2072#0" expanded="true" />
+            <element signature="e#708#740#0" expanded="true" />
+            <element signature="n#!!block;n#changeType#0" expanded="true" />
+            <element signature="e#2194#2238#0" expanded="true" />
+            <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+            <element signature="e#3219#3932#0" expanded="true" />
+            <element signature="e#3525#3758#0" expanded="true" />
+            <element signature="n#!!block;n#generateText#0" expanded="true" />
             <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-            <element signature="e#8881#9092#0" expanded="true" />
+            <element signature="e#8833#8893#0" expanded="true" />
+            <element signature="e#9044#9255#0" expanded="true" />
+            <element signature="n#!!block;n#editText#0" expanded="true" />
+            <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+            <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+            <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+            <element signature="e#10377#10634#0" expanded="true" />
+            <element signature="e#10406#10627#0" expanded="true" />
+            <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+            <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+            <element signature="e#10957#11049#0" expanded="true" />
+            <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+            <element signature="n#!!block;n#maxLength#0" expanded="true" />
+            <element signature="e#11488#11555#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -447,10 +559,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1071">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -468,10 +589,29 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="136" max-vertical-offset="748">
           <caret line="8" column="41" selection-start-line="8" selection-start-column="41" selection-end-line="8" selection-end-column="41" />
           <folding>
-            <element signature="e#50#1609#0" expanded="true" />
-            <element signature="e#291#323#0" expanded="true" />
+            <element signature="e#471#2072#0" expanded="true" />
+            <element signature="e#708#740#0" expanded="true" />
+            <element signature="n#!!block;n#changeType#0" expanded="true" />
+            <element signature="e#2194#2238#0" expanded="true" />
+            <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+            <element signature="e#3219#3932#0" expanded="true" />
+            <element signature="e#3525#3758#0" expanded="true" />
+            <element signature="n#!!block;n#generateText#0" expanded="true" />
             <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-            <element signature="e#8881#9092#0" expanded="true" />
+            <element signature="e#8833#8893#0" expanded="true" />
+            <element signature="e#9044#9255#0" expanded="true" />
+            <element signature="n#!!block;n#editText#0" expanded="true" />
+            <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+            <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+            <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+            <element signature="e#10377#10634#0" expanded="true" />
+            <element signature="e#10406#10627#0" expanded="true" />
+            <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+            <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+            <element signature="e#10957#11049#0" expanded="true" />
+            <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+            <element signature="n#!!block;n#maxLength#0" expanded="true" />
+            <element signature="e#11488#11555#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -489,10 +629,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1071">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -510,10 +659,29 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="3536">
           <caret line="13" column="73" selection-start-line="13" selection-start-column="56" selection-end-line="13" selection-end-column="73" />
           <folding>
-            <element signature="e#50#1609#0" expanded="true" />
-            <element signature="e#291#323#0" expanded="true" />
+            <element signature="e#471#2072#0" expanded="true" />
+            <element signature="e#708#740#0" expanded="true" />
+            <element signature="n#!!block;n#changeType#0" expanded="true" />
+            <element signature="e#2194#2238#0" expanded="true" />
+            <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+            <element signature="e#3219#3932#0" expanded="true" />
+            <element signature="e#3525#3758#0" expanded="true" />
+            <element signature="n#!!block;n#generateText#0" expanded="true" />
             <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-            <element signature="e#8881#9092#0" expanded="true" />
+            <element signature="e#8833#8893#0" expanded="true" />
+            <element signature="e#9044#9255#0" expanded="true" />
+            <element signature="n#!!block;n#editText#0" expanded="true" />
+            <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+            <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+            <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+            <element signature="e#10377#10634#0" expanded="true" />
+            <element signature="e#10406#10627#0" expanded="true" />
+            <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+            <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+            <element signature="e#10957#11049#0" expanded="true" />
+            <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+            <element signature="n#!!block;n#maxLength#0" expanded="true" />
+            <element signature="e#11488#11555#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -531,10 +699,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3774">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -552,10 +729,29 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="3536">
           <caret line="13" column="73" selection-start-line="13" selection-start-column="56" selection-end-line="13" selection-end-column="73" />
           <folding>
-            <element signature="e#50#1609#0" expanded="true" />
-            <element signature="e#291#323#0" expanded="true" />
+            <element signature="e#471#2072#0" expanded="true" />
+            <element signature="e#708#740#0" expanded="true" />
+            <element signature="n#!!block;n#changeType#0" expanded="true" />
+            <element signature="e#2194#2238#0" expanded="true" />
+            <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+            <element signature="e#3219#3932#0" expanded="true" />
+            <element signature="e#3525#3758#0" expanded="true" />
+            <element signature="n#!!block;n#generateText#0" expanded="true" />
             <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-            <element signature="e#8881#9092#0" expanded="true" />
+            <element signature="e#8833#8893#0" expanded="true" />
+            <element signature="e#9044#9255#0" expanded="true" />
+            <element signature="n#!!block;n#editText#0" expanded="true" />
+            <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+            <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+            <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+            <element signature="e#10377#10634#0" expanded="true" />
+            <element signature="e#10406#10627#0" expanded="true" />
+            <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+            <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+            <element signature="e#10957#11049#0" expanded="true" />
+            <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+            <element signature="n#!!block;n#maxLength#0" expanded="true" />
+            <element signature="e#11488#11555#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -573,10 +769,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3774">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -594,10 +799,29 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="221" max-vertical-offset="3094">
           <caret line="13" column="92" selection-start-line="13" selection-start-column="92" selection-end-line="13" selection-end-column="92" />
           <folding>
-            <element signature="e#50#1609#0" expanded="true" />
-            <element signature="e#291#323#0" expanded="true" />
+            <element signature="e#471#2072#0" expanded="true" />
+            <element signature="e#708#740#0" expanded="true" />
+            <element signature="n#!!block;n#changeType#0" expanded="true" />
+            <element signature="e#2194#2238#0" expanded="true" />
+            <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+            <element signature="e#3219#3932#0" expanded="true" />
+            <element signature="e#3525#3758#0" expanded="true" />
+            <element signature="n#!!block;n#generateText#0" expanded="true" />
             <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-            <element signature="e#8881#9092#0" expanded="true" />
+            <element signature="e#8833#8893#0" expanded="true" />
+            <element signature="e#9044#9255#0" expanded="true" />
+            <element signature="n#!!block;n#editText#0" expanded="true" />
+            <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+            <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+            <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+            <element signature="e#10377#10634#0" expanded="true" />
+            <element signature="e#10406#10627#0" expanded="true" />
+            <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+            <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+            <element signature="e#10957#11049#0" expanded="true" />
+            <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+            <element signature="n#!!block;n#maxLength#0" expanded="true" />
+            <element signature="e#11488#11555#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -615,10 +839,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3400">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -636,10 +869,29 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2635">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#50#1609#0" expanded="true" />
-            <element signature="e#291#323#0" expanded="true" />
+            <element signature="e#471#2072#0" expanded="true" />
+            <element signature="e#708#740#0" expanded="true" />
+            <element signature="n#!!block;n#changeType#0" expanded="true" />
+            <element signature="e#2194#2238#0" expanded="true" />
+            <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+            <element signature="e#3219#3932#0" expanded="true" />
+            <element signature="e#3525#3758#0" expanded="true" />
+            <element signature="n#!!block;n#generateText#0" expanded="true" />
             <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-            <element signature="e#8881#9092#0" expanded="true" />
+            <element signature="e#8833#8893#0" expanded="true" />
+            <element signature="e#9044#9255#0" expanded="true" />
+            <element signature="n#!!block;n#editText#0" expanded="true" />
+            <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+            <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+            <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+            <element signature="e#10377#10634#0" expanded="true" />
+            <element signature="e#10406#10627#0" expanded="true" />
+            <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+            <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+            <element signature="e#10957#11049#0" expanded="true" />
+            <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+            <element signature="n#!!block;n#maxLength#0" expanded="true" />
+            <element signature="e#11488#11555#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -657,10 +909,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1581" max-vertical-offset="3417">
           <caret line="21" column="76" selection-start-line="21" selection-start-column="73" selection-end-line="21" selection-end-column="76" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -678,10 +939,29 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2635">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#50#1609#0" expanded="true" />
-            <element signature="e#291#323#0" expanded="true" />
+            <element signature="e#471#2072#0" expanded="true" />
+            <element signature="e#708#740#0" expanded="true" />
+            <element signature="n#!!block;n#changeType#0" expanded="true" />
+            <element signature="e#2194#2238#0" expanded="true" />
+            <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+            <element signature="e#3219#3932#0" expanded="true" />
+            <element signature="e#3525#3758#0" expanded="true" />
+            <element signature="n#!!block;n#generateText#0" expanded="true" />
             <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-            <element signature="e#8881#9092#0" expanded="true" />
+            <element signature="e#8833#8893#0" expanded="true" />
+            <element signature="e#9044#9255#0" expanded="true" />
+            <element signature="n#!!block;n#editText#0" expanded="true" />
+            <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+            <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+            <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+            <element signature="e#10377#10634#0" expanded="true" />
+            <element signature="e#10406#10627#0" expanded="true" />
+            <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+            <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+            <element signature="e#10957#11049#0" expanded="true" />
+            <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+            <element signature="n#!!block;n#maxLength#0" expanded="true" />
+            <element signature="e#11488#11555#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -699,10 +979,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1581" max-vertical-offset="3417">
           <caret line="21" column="76" selection-start-line="21" selection-start-column="73" selection-end-line="21" selection-end-column="76" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -720,10 +1009,29 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="3179">
           <caret line="0" column="0" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
           <folding>
-            <element signature="e#50#1609#0" expanded="true" />
-            <element signature="e#291#323#0" expanded="true" />
+            <element signature="e#471#2072#0" expanded="true" />
+            <element signature="e#708#740#0" expanded="true" />
+            <element signature="n#!!block;n#changeType#0" expanded="true" />
+            <element signature="e#2194#2238#0" expanded="true" />
+            <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+            <element signature="e#3219#3932#0" expanded="true" />
+            <element signature="e#3525#3758#0" expanded="true" />
+            <element signature="n#!!block;n#generateText#0" expanded="true" />
             <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-            <element signature="e#8881#9092#0" expanded="true" />
+            <element signature="e#8833#8893#0" expanded="true" />
+            <element signature="e#9044#9255#0" expanded="true" />
+            <element signature="n#!!block;n#editText#0" expanded="true" />
+            <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+            <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+            <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+            <element signature="e#10377#10634#0" expanded="true" />
+            <element signature="e#10406#10627#0" expanded="true" />
+            <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+            <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+            <element signature="e#10957#11049#0" expanded="true" />
+            <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+            <element signature="n#!!block;n#maxLength#0" expanded="true" />
+            <element signature="e#11488#11555#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -741,10 +1049,19 @@
         <state vertical-scroll-proportion="0.0" vertical-offset="1581" max-vertical-offset="3417">
           <caret line="21" column="76" selection-start-line="21" selection-start-column="73" selection-end-line="21" selection-end-column="76" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
           </folding>
         </state>
       </provider>
@@ -795,34 +1112,62 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/index.html">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="301" max-vertical-offset="2380">
-          <caret line="72" column="70" selection-start-line="72" selection-start-column="20" selection-end-line="72" selection-end-column="70" />
+        <state vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="2380">
+          <caret line="10" column="30" selection-start-line="10" selection-start-column="30" selection-end-line="10" selection-end-column="30" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/js/tool.js">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2023">
-          <caret line="221" column="56" selection-start-line="221" selection-start-column="56" selection-end-line="221" selection-end-column="56" />
-          <folding>
-            <element signature="e#50#1609#0" expanded="true" />
-            <element signature="e#291#323#0" expanded="true" />
-            <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
-            <element signature="e#8881#9092#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/js/activity.js">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.3074074" vertical-offset="1094" max-vertical-offset="2754">
-          <caret line="141" column="24" selection-start-line="141" selection-start-column="24" selection-end-line="141" selection-end-column="24" />
+        <state vertical-scroll-proportion="-14.068966" vertical-offset="0" max-vertical-offset="2448">
+          <caret line="24" column="0" selection-start-line="24" selection-start-column="0" selection-end-line="24" selection-end-column="0" />
           <folding>
-            <element signature="e#504#1264#0" expanded="true" />
-            <element signature="e#574#1259#0" expanded="true" />
-            <element signature="n#!!block;n#highlightOld#0" expanded="true" />
-            <element signature="e#6470#6497#0" expanded="true" />
+            <element signature="e#66#775#0" expanded="true" />
+            <element signature="e#136#770#0" expanded="true" />
+            <element signature="n#!!block;n#initActivity#0" expanded="true" />
+            <element signature="n#!!block;n#setGlobalFromJSON#0" expanded="true" />
+            <element signature="e#1167#1198#0" expanded="true" />
+            <element signature="n#!!block;n#getButtonHTML#0" expanded="true" />
+            <element signature="e#1345#1654#0" expanded="true" />
+            <element signature="n#!!block;n#highlight#0" expanded="true" />
+            <element signature="e#2788#3071#0" expanded="true" />
+            <element signature="e#3266#3293#0" expanded="true" />
+            <element signature="n#!!block;n#reset#0" expanded="true" />
+            <element signature="n#!!block;n#selectPen#0" expanded="true" />
+            <element signature="n#!!block;n#getSelection#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/js/tool.js">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.7271605" vertical-offset="1570" max-vertical-offset="4879">
+          <caret line="235" column="0" selection-start-line="235" selection-start-column="0" selection-end-line="235" selection-end-column="0" />
+          <folding>
+            <element signature="e#471#2072#0" expanded="true" />
+            <element signature="e#708#740#0" expanded="true" />
+            <element signature="n#!!block;n#changeType#0" expanded="true" />
+            <element signature="e#2194#2238#0" expanded="true" />
+            <element signature="n#!!block;n#spanCharacters#0" expanded="true" />
+            <element signature="e#3219#3932#0" expanded="true" />
+            <element signature="e#3525#3758#0" expanded="true" />
+            <element signature="n#!!block;n#generateText#0" expanded="true" />
+            <element signature="n#!!block;n#saveHighlightData#0" expanded="true" />
+            <element signature="e#8833#8893#0" expanded="true" />
+            <element signature="e#9044#9255#0" expanded="true" />
+            <element signature="n#!!block;n#editText#0" expanded="true" />
+            <element signature="n#!!block;n#generatePreview#0" expanded="true" />
+            <element signature="n#!!block;n#generateJSON#0" expanded="true" />
+            <element signature="n#!!block;n#handleFileSelect#0" expanded="true" />
+            <element signature="e#10377#10634#0" expanded="true" />
+            <element signature="e#10406#10627#0" expanded="true" />
+            <element signature="n#!!block;n#uploadJSON#0" expanded="true" />
+            <element signature="n#!!block;n#getPensInUse#0" expanded="true" />
+            <element signature="e#10957#11049#0" expanded="true" />
+            <element signature="n#!!block;n#handleSpaces#0" expanded="true" />
+            <element signature="n#!!block;n#maxLength#0" expanded="true" />
+            <element signature="e#11488#11555#0" expanded="true" />
           </folding>
         </state>
       </provider>

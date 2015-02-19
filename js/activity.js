@@ -1,36 +1,8 @@
-var GLOBAL = {
-    currentColour: 'yellow',
-    dragging: true,
-    allPens: {
-        yellow: {},
-        green: {},
-        pink: {},
-        blue: {},
-        orange: {},
-        red: {}
-    },
-    pens: {},
-    eraser: true,
-    markSpaces: false,
-    markPunctuation: false,
-
-    //used in tool only...
-    initialGenerate: true,
-    $spans: null,
-    $tiny: null
-};
-
-
-var stops = {
-	character: [''],
-	sentence: ['stop'],
-	word: ['comma', 'stop', 'space']
-};
-
+var GLOBAL = GLOBAL || {};
 
 $.getJSON('data.json', function(json) { //TODO replace with VLE.getAttachment
 	$(document).ready(function() {
-		if ($('title').text() !== 'Highlighting tool') { //TODO find better way to do this!
+		if (!GLOBAL.inTool) {
 			console.log('Not in the tool!');
 
 			setGlobalFromJSON(json);
@@ -40,8 +12,8 @@ $.getJSON('data.json', function(json) { //TODO replace with VLE.getAttachment
 			$('.buttons').html(buttonHTML);
 		}
 
-		$('.highlightable').on('mousedown', 'span:not(.block)', highlight);
-		$('.highlightable').on('mouseleave mouseup', function() { $('.highlightable').off('mouseover', 'span:not(.block)'); });
+		$('.highlightable').on('mousedown', 'span:not(.block)', highlight); //TODO add key actions
+		$('.highlightable').on('mouseleave mouseup', function() { $('.highlightable').off('mouseover', 'span'); });
 		$('.highlightable').on('selectstart', function(e) { e.preventDefault(); });
 		$('#check').on('click', checkAnswer);
 		$('#reveal').on('click', revealAnswer);
@@ -52,22 +24,8 @@ $.getJSON('data.json', function(json) { //TODO replace with VLE.getAttachment
 });
 
 //TODO define handling of punctuation for word type
-
-/* Function to generate JSON. HTML page to have following options...
- * show all 6 pens but only add to JSON if used
- * show eraser and option to include in answer
- * question text - no colour info
- * answer - with colour info
- * activity type (controls how things are highlighted - exactly the same during set up and answer)
- types:
- character - this
- word - until space, stop, comma etc.
- sentence - until stop
- paragraph - all
- custom - until custom class
- * spaces selectable?
- * allow dragging
- */
+//TODO spaces/punctuation hilightable - just turn events on/off, leave colour info until output (remove if not selectable)?
+//TODO allow dragging
 
 function initActivity() {
 	$('#question').html(decodeURI(GLOBAL.question));
@@ -80,12 +38,12 @@ function setGlobalFromJSON(json) {
 	});
 }
 
-function getButtonHTML(tool) {
-	var pens = tool ? GLOBAL.allPens : GLOBAL.pens;
+function getButtonHTML() {
+	var pens = GLOBAL.inTool ? GLOBAL.allPens : GLOBAL.pens;
 	var buttonHTML = '';
 
 	$.each(pens, function(key, val) {
-		var label = tool ? '<textarea class="pen_label" rows="2" maxlength="25" />' : '<div>' + val.label + '</div>';
+		var label = GLOBAL.inTool ? '<textarea class="pen_label" rows="2" maxlength="25" />' : '<div>' + val.label + '</div>';
 
 		buttonHTML += '<div id="' + key + '_pen" class="colourbutton" tabindex="1">' +
 			'<img alt="' + key + ' highlighter pen" src="images/' + key + '1.jpg" />' +
@@ -93,7 +51,9 @@ function getButtonHTML(tool) {
 		'</div>';
 	});
 
-	buttonHTML += '<div id="eraser" class="eraserdiv" tabindex="1"><img src="images/eraser_load.jpg" alt="eraser" /></div>';
+    if (GLOBAL.eraser) {
+        buttonHTML += '<div id="eraser" class="eraserdiv" tabindex="1"><img src="images/eraser_load.jpg" alt="eraser" /></div>';
+    }
 
 	return buttonHTML;
 }
@@ -124,101 +84,22 @@ function highlight() {
     if (GLOBAL.currentColour !== 'eraser') {
         removeHighlight($toHighlight);
 
-		console.log($toHighlight);
-
 		$toHighlight
             .addClass(GLOBAL.currentColour);
 
         if (GLOBAL.dragging) {
-            $('.highlightable').on('mouseover', 'span:not(.block)', function () {
-                $(this).addClass(GLOBAL.currentColour);
+            $('.highlightable').on('mouseover', 'span', function () {
+                var $toHighlight = GLOBAL.highlightType === 'char' ? $(this) : $(this).children();
+
+                console.log('dragging');
+                //TODO spaces not auto highlighted when dragging
+
+                $toHighlight.addClass(GLOBAL.currentColour);
             });
         }
     } else {
         removeHighlight($toHighlight);
     }
-}
-
-function highlightOld() {
-	var $curr = $(this);
-	var $toHighlight;
-	var $prev;
-	var $next;
-	var $selection;
-	var $prevSpace;
-    var prevWordSelected = true;
-
-	// define 'block' to be highlighted
-	// getHighlightSelection($curr) - return current block
-	// getPreviousHighlightBlock(first element before $prevSpace) - use getHighlightTarget and return previous block
-	// if previousBlockHighlighted && spaceSelection === 'auto' then highlight space
-
-	console.log(GLOBAL.highlightType);
-
-    switch(GLOBAL.highlightType) {
-        case 'char':
-            $selection = $curr;
-			$prevSpace = $selection.prev('.space');
-			$toHighlight = $selection;
-            break;
-        case 'word':
-            //write as function... if (activityType !== character) { call the function with type }
-            //generalise - previous block/element/chunk (defined by type) selected.
-            $prev = $curr.prevUntil('.space');
-            $next = $curr.nextUntil('.space');
-            $selection = $curr.add($prev).add($next);
-            $prevSpace = $selection.prev('.space');
-
-            $.each(stops[GLOBAL.highlightType], function(i, value) {
-                if ($selection.last().hasClass(value)) {
-                    $selection = $selection.filter(':not(.' + value + ')');
-                }
-            });
-
-            if (prevWordSelected) {
-                //$prevSpace = $prev.eq($prev.length - 1).prev('.space');
-                $selection = $selection.add($prevSpace);
-            }
-
-            $toHighlight = $selection;
-            break;
-        case 'sentence':
-            $prev = $curr.prevUntil('.stop'); // what if first sentence?
-            $next = $curr.nextUntil('.stop');
-            $selection = $curr.add($prev).add($next);
-			$prevSpace = $selection.prev('.space');
-
-            $toHighlight = $selection;
-            break;
-        case 'para':
-			$selection = $curr.parents().filter(function() {
-				return $(this).css('display') === 'block'; //how to handle tables and list items???
-			}).first();
-			$toHighlight = $selection.find('span');
-            break;
-    }
-
-	if (GLOBAL.currentColour !== 'eraser') {
-		removeHighlight($toHighlight);
-
-		$toHighlight
-			.addClass(GLOBAL.currentColour);
-
-		if (GLOBAL.dragging) {
-			$('.highlightable').on('mouseover', 'span', function () {
-				$(this).addClass(GLOBAL.currentColour);
-			});
-		}
-	} else {
-		removeHighlight($toHighlight);
-	}
-}
-
-function getSelection($span, start, end) {
-	var $prev = $span.prevUntil('.' + start);
-	var $next = $span.nextUntil('.' + end);
-
-	return $span.add($prev).add($next);
 }
 
 function removeHighlight($s) {
@@ -309,4 +190,11 @@ function selectPen(e) {
 	}
 
 	console.log(GLOBAL.currentColour);
+}
+
+function getSelection($span, start, end) {
+    var $prev = $span.prevUntil('.' + start);
+    var $next = $span.nextUntil('.' + end);
+
+    return $span.add($prev).add($next);
 }
