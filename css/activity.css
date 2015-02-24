@@ -65,7 +65,7 @@ input[type="button"] {
 .buttons textarea {
 	vertical-align: top;
 }
-.colourbutton div {
+.colourbutton span {
 	/*display: block;*/
 	width: 70px;
 	margin-left: 4px;

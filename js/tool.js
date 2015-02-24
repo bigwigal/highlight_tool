@@ -26,22 +26,24 @@ var GLOBAL = {
 $(document).ready(function() {
     initTiny();
 
-    $('#highlight_tab .buttons').html(getButtonHTML());
+    $('#highlight_tab').find('.buttons').html(getButtonHTML());
 
     //$('#highlight_tab .buttons div:not(#eraser)').append('<textarea class="pen_label" rows="2" maxlength="25" />');
-    $('.buttons textarea').each(function() {
+    $('.buttons').find('textarea').each(function() {
         maxLength(this);
     });
 
-    GLOBAL.highlightType = 'sentence';
+    GLOBAL.highlightType = 'word';
     //GLOBAL.highlightType = $('select[name="type"] option:selected').val();
     GLOBAL.spaceSelection = $('select[name="space_selection"] option:selected').val();
 
     //console.log(GLOBAL);
 
-    $('a[href="#highlight_tab"]').on('show.bs.tab', generateText);
+    //$('a[href="#highlight_tab"]').on('show.bs.tab', generateText);
+    $('a[href="#editor_tab"]')
+        .on('show.bs.tab', editText)
+        .on('hide.bs.tab', saveTextData);
     $('a[href="#highlight_tab"]').on('hide.bs.tab', saveHighlightData);
-    $('a[href="#editor_tab"]').on('show.bs.tab', editText);
     $('a[href="#preview_tab"]').on('show.bs.tab', generatePreview);
     $('#generate').on('click', generateJSON);
     $('#data').on('change', handleFileSelect);
@@ -54,23 +56,22 @@ $(document).ready(function() {
     $('input[name="spaces"]').on('change', function() { GLOBAL.markSpaces = !GLOBAL.markSpaces; });
     $('input[name="punctuation"]').on('change', function() { GLOBAL.markPunctuation = !GLOBAL.markPunctuation; });
     $('select[name="type"]').on('change', changeType); //TODO set standard configurations per type??
-
 });
 
-function changeType() {
-    GLOBAL.highlightType = $(this).val();
+/**TODO check tab behaviour:
+ Text editor hide - save html to GLOBAL.$tiny (don't allow unless data to save)
+ Text editor show - populate with GLOBAL.answer || GLOBAL.$tiny if not set?? Encoding???
+ Highlight hide - save all related data to GLOBAL
+ Highlight show - load data
+ Preview show - load data
+ **/
 
-    $('#highlight').find('.block').each(function() {
-        $(this).children().unwrap();
-    });
+//TODO CHECK: Upload - events on buttons only.
 
-    $('#highlight span').removeAttr('tabindex');
-
-    spanBlocks('#highlight')
-}
+function initTool() {}
 
 function initTiny() {
-    GLOBAL.$tiny = $('#tiny textarea');
+    GLOBAL.$tiny = $('#tiny').find('textarea');
 
     GLOBAL.$tiny.tinymce({
         script_url : 'tinymce/tinymce.min.js',
@@ -84,13 +85,11 @@ function initTiny() {
         ],
         toolbar: 'insertfile undo redo | styleselect | bold italic | alignleft aligncenter alignright alignjustify | table | bullist numlist outdent indent | link image | code',
         setup: function(ed) {
-            ed.on('change', function(e) {
+            ed.on('change', function() {
                 console.log('tiny changed');
             });
         }
     });
-
-    //GLOBAL.$tiny.html($('#sample_html').html());
 }
 
 function spanCharacters(el) {
@@ -138,11 +137,16 @@ function spanBlocks(el) {
             break;
         case 'word':
             $(el).find('span').each(function() {
-                if (!$(this).hasClass('space')) {
+                var $this = $(this);
+
+                if (!$this.hasClass('space') && !$this.hasClass('punct') && !$this.is(':last-child')) {
                     $block = $block.add($(this));
                 }
                 else {
-                    //check if last el is punct and chop if so??
+                    if ($this.is(':last-child') && !$this.hasClass('punct')) {
+                        $block = $block.add($(this));
+                    }
+
                     $block.wrapAll('<span class="block" tabindex="1"></span>');
                     $block = $();
                 }
@@ -220,6 +224,8 @@ function classNonAlphaNumericChars() {
         comma: ',',
         semi: ';',
         colon: ':',
+        quote: '\'',
+        d_quote: '"',
         question: '?',
         exclamation: '!',
         l_bracket: '(',
@@ -241,21 +247,23 @@ function classNonAlphaNumericChars() {
     });
 }
 
-//TODO handle spaces for all but para - if prev block selected highlight prevSpace
+function editText() {
+    var html = removeBlocks(decodeURI(GLOBAL.answer));
 
-/**TODO check tab behaviour:
-    Text editor hide - save html to GLOBAL.$tiny (don't allow unless data to save)
-    Text editor show - populate with GLOBAL.answer || GLOBAL.$tiny if not set?? Encoding???
-    Highlight hide - save all related data to GLOBAL
-    Highlight show - load data
-    Preview show - load data
-**/
+    GLOBAL.$tiny.html(html);
+}
 
-//TODO CHECK: Upload - events on buttons only.
+function saveTextData() {
+    GLOBAL.answer = encodeURI(GLOBAL.$tiny.html());
 
+    //console.log(GLOBAL.$tiny.html());
 
-function generateText() {
-    var tinyHTML = GLOBAL.$tiny.html();
+    generateHighlightText();
+}
+
+function generateHighlightText() { //TODO set this to only fire when leaving editor??
+    //var tinyHTML = GLOBAL.$tiny.html();
+    var tinyHTML = decodeURI(GLOBAL.answer);
 
     $('a[href="#preview_tab"]').parent().add('#preview_tab').removeClass('disabled');
 
@@ -294,14 +302,8 @@ function saveHighlightData() {
     //console.log(GLOBAL.pens);
 }
 
-function editText() {
-    var html = removeBlocks(decodeURI(GLOBAL.answer));
-
-    GLOBAL.$tiny.html(html);
-}
-
 function generatePreview() {
-    var buttonHTML = getButtonHTML();
+    var buttonHTML = getButtonHTML(true);
 
     $('#preview_tab .buttons').html(buttonHTML);
 
@@ -358,7 +360,7 @@ function uploadJSON(e) {
 
 function getPensInUse() {
     $.each(GLOBAL.allPens, function(key, val) {
-        if ($('.' + key).length > 0) {
+        if ($('#highlight .' + key).length > 0) {
             GLOBAL.pens[key] = val;
         }
     });
@@ -367,17 +369,33 @@ function getPensInUse() {
 }
 
 function handleSpaces(e) {
-    var $spaces = $('.space');
+    var $spaces = $('.space:not(.block .space)');
 
-    //console.log($spaces);
+    GLOBAL.spaceSelection = e.target.value;
 
-    if (e.target.value === 'manual') {
-        $spaces.removeClass('noevents');
+    if (GLOBAL.spaceSelection === 'auto') {
+        autoSelectSpaces();
+    }
+
+    if (GLOBAL.spaceSelection === 'manual') {
+        $spaces.attr('tabindex', '1');
     }
     else {
         removeHighlight($spaces);
-        $spaces.addClass('noevents');
+        $spaces.removeAttribute('tabindex');
     }
+}
+
+function changeType() {
+    GLOBAL.highlightType = $(this).val();
+
+    $('#highlight').find('.block').each(function() {
+        $(this).children().unwrap();
+    });
+
+    $('#highlight span').removeAttr('tabindex');
+
+    spanBlocks('#highlight')
 }
 
 function maxLength(el) {

@@ -1,20 +1,25 @@
-var GLOBAL = GLOBAL || {};
+var GLOBAL = GLOBAL || {
+        inTool: false
+    };
+
 
 $.getJSON('data.json', function(json) { //TODO replace with VLE.getAttachment
 	$(document).ready(function() {
 		if (!GLOBAL.inTool) {
 			console.log('Not in the tool!');
 
-			setGlobalFromJSON(json);
+			setGlobal(json);
 			initActivity();
 
 			var buttonHTML = getButtonHTML();
 			$('.buttons').html(buttonHTML);
 		}
 
-		$('.highlightable').on('mousedown', 'span:not(.block)', highlight); //TODO add key actions
-		$('.highlightable').on('mouseleave mouseup', function() { $('.highlightable').off('mouseover', 'span'); });
-		$('.highlightable').on('selectstart', function(e) { e.preventDefault(); });
+		$('.highlightable')
+            .on('mousedown keydown', 'span:not(.block)', highlight)
+		    .on('keydown', 'span.block', handleKeyEvents)
+		    .on('mouseleave mouseup keyup', function() { $('.highlightable').off('mouseover', 'span'); })
+		    .on('selectstart', function(e) { e.preventDefault(); });
 		$('#check').on('click', checkAnswer);
 		$('#reveal').on('click', revealAnswer);
 		$('.reset').on('click', reset);
@@ -24,62 +29,87 @@ $.getJSON('data.json', function(json) { //TODO replace with VLE.getAttachment
 });
 
 //TODO define handling of punctuation for word type
-//TODO spaces/punctuation hilightable - just turn events on/off, leave colour info until output (remove if not selectable)?
-//TODO allow dragging
+//TODO spaces/punctuation highlightable - just turn events on/off, leave colour info until output (remove if not selectable)?
+
+function setGlobal(obj) {
+	$.each(obj, function (key) {
+		GLOBAL[key] = obj[key];
+	});
+}
 
 function initActivity() {
-	$('#question').html(decodeURI(GLOBAL.question));
-	$('#answer').html(decodeURI(GLOBAL.answer));
+    $('#question').html(decodeURI(GLOBAL.question));
+    $('#answer').html(decodeURI(GLOBAL.answer));
 }
 
-function setGlobalFromJSON(json) {
-	$.each(json, function (key) {
-		GLOBAL[key] = json[key];
-	});
-}
+function getButtonHTML(preview) {
+    var pens = !GLOBAL.inTool ? GLOBAL.pens : GLOBAL.allPens;
+    var buttonHTML = '';
+    var textAreaHTML = '<textarea class="pen_label" rows="2" maxlength="25" />';
 
-function getButtonHTML() {
-	var pens = GLOBAL.inTool ? GLOBAL.allPens : GLOBAL.pens;
-	var buttonHTML = '';
+    $.each(pens, function(key, val) {
+        var label = !GLOBAL.inTool || preview ? '<span>' + val.label + '</span>' : textAreaHTML;
 
-	$.each(pens, function(key, val) {
-		var label = GLOBAL.inTool ? '<textarea class="pen_label" rows="2" maxlength="25" />' : '<div>' + val.label + '</div>';
-
-		buttonHTML += '<div id="' + key + '_pen" class="colourbutton" tabindex="1">' +
-			'<img alt="' + key + ' highlighter pen" src="images/' + key + '1.jpg" />' +
-			label +
-		'</div>';
-	});
+        buttonHTML += '<div id="' + key + '_pen" class="colourbutton" tabindex="1">' +
+        '<img alt="' + key + ' highlighter pen" src="images/' + key + '1.jpg" />' +
+        label +
+        '</div>';
+    });
 
     if (GLOBAL.eraser) {
         buttonHTML += '<div id="eraser" class="eraserdiv" tabindex="1"><img src="images/eraser_load.jpg" alt="eraser" /></div>';
     }
 
-	return buttonHTML;
+    return buttonHTML;
+}
+
+function handleKeyEvents(e) {
+    if (e.which === 13) {
+        var event = jQuery.Event('mousedown');
+        event.target = $(this).find('span')[0];
+
+        $(e.delegateTarget).trigger(event);
+
+        $(this).next().focus();
+
+        console.log($(this).next());
+    }
+}
+
+function selectPen(e) {
+    var id = e.currentTarget.id;
+
+    if (id !== 'eraser') {
+        var penColour = id.replace('_pen', '');
+        GLOBAL.currentColour = penColour;
+    } else {
+        GLOBAL.currentColour = 'eraser';
+    }
+
+    console.log(GLOBAL.currentColour);
 }
 
 function highlight() {
     var $toHighlight;
 
-    if (GLOBAL.highlightType === 'char') {
+    if ($(this).hasClass('space')) {
+        if (GLOBAL.spaceSelection === 'manual') {
+            $toHighlight = $(this);
+        } else {
+            return false;
+        }
+    }
+    else if (GLOBAL.highlightType === 'char') {
         $toHighlight = $(this);
     }
     else {
-        $toHighlight = $(this).parents('.block').addClass('highlighted').find('span');
+        var $thisBlock = $(this).closest('.block').addClass('highlighted');
 
 		if (GLOBAL.spaceSelection === 'auto') {
-			var $thisBlock = $(this).parents('.block');
-			var $prevBlock = $thisBlock.prevAll('.block:first');
-			var $nextBlock = $thisBlock.nextAll('.block:first');
-
-			if ($prevBlock.length > 0 && $prevBlock.hasClass('highlighted')) {
-				$toHighlight = $toHighlight.add($thisBlock.prev());
-			}
-
-			if ($nextBlock.length > 0 && $nextBlock.hasClass('highlighted')) {
-				$toHighlight = $toHighlight.add($thisBlock.next());
-			}
+            autoSelectSpaces($thisBlock);
 		}
+
+        $toHighlight = $thisBlock.find('span').addBack();
     }
     if (GLOBAL.currentColour !== 'eraser') {
         removeHighlight($toHighlight);
@@ -102,16 +132,110 @@ function highlight() {
     }
 }
 
+function autoSelectSpaces($selection) {
+    //on type change - all blocks
+    //on highlight new - this el
+    //on highlight change - this el (remove if different)
+
+    var $s = $selection || $('.block');
+
+    $s.each(function() {
+        var $thisBlock = $(this);
+        var $prevBlock = $thisBlock.prevAll('.block:first');
+        var $nextBlock = $thisBlock.nextAll('.block:first');
+
+        if ($prevBlock.length > 0 && $prevBlock.hasClass('highlighted')) {
+            if ($prevBlock.hasClass(GLOBAL.currentColour)) {
+                $thisBlock.prev().addClass(GLOBAL.currentColour);
+            }
+            else {
+                removeHighlight($thisBlock.prev());
+            }
+        }
+
+        if ($nextBlock.length > 0 && $nextBlock.hasClass('highlighted')) {
+            if ($nextBlock.hasClass(GLOBAL.currentColour)) {
+                $thisBlock.next().addClass(GLOBAL.currentColour);
+            }
+            else {
+                removeHighlight($thisBlock.next());
+            }
+        }
+    });
+}
+
 function removeHighlight($s) {
-	var pens = GLOBAL.tool ? getPensInUse() : GLOBAL.pens;
+	var pens = GLOBAL.inTool ? getPensInUse() : GLOBAL.pens;
 
 	$.each(pens, function(key, val) {
 		$s.removeClass(key);
 	});
 
-	$('.block').removeClass('highlighted');
-
 	return $s;
+}
+
+function checkAnswer() {
+    var $attempt = $('#question span');
+    var $answer = $('#answer span');
+
+    $('#feedback').empty();
+
+    $attempt.each(function(i) {
+        //classList not supported in IE8/9
+        //var attempt = this.classList;
+        //var answer = $answer[i].classList;
+        var attemptClasses = this.className;
+        var answerClasses = $answer[i].className;
+        var attemptArray = attemptClasses.split(' ').sort();
+        var answerArray = answerClasses.split(' ').sort();
+
+        if (attemptArray.length !== answerArray.length) {
+            $('#feedback').append('<p>Wrong!</p>');
+            return false;
+        }
+
+        for (var i = 0; i < attemptArray.length; i++) {
+            //Don't check spaces if set to manually select or no select.
+
+            if (attemptArray[i] !== answerArray[i]) {
+                $('#feedback').html('<p>Wrong!</p>');
+                return false;
+            }
+        }
+
+        //Must be correct...
+        //$('#feedback').html('Correct!');
+    });
+
+    $('#feedback').append(getHighlightedText());
+
+    //Partially correct response!?
+
+    //Show correct answer as well as text version
+
+    //The following text is highlighted in yellow...
+    //The following text is highlighted in green...
+
+
+}
+
+function getHighlightedText() {
+    var pens = !GLOBAL.inTool ? GLOBAL.pens : getPensInUse();
+    var highlighted = '';
+
+    //console.log(pens);
+
+    $.each(pens, function(key) {
+        var $wrapper = $('<div id="' + key + '_text"><p>The following text is highlighted ' + key + ':</p></div>');
+
+        $('#answer').find('.' + key + ':not(.block)').clone().removeAttr('class').wrapAll('<div></div>').appendTo($wrapper);
+
+        highlighted += $wrapper.html();
+    });
+
+    console.log(highlighted);
+
+    return highlighted;
 }
 
 function revealAnswer(e) {
@@ -129,72 +253,22 @@ function revealAnswer(e) {
 	}
 }
 
-function checkAnswer() {
-	var $attempt = $('#question span');
-	var $answer = $('#answer span');
+function reset(e) {
+    //TODO sort the behaviour for the preview...
+    var $selection = $('#question');
 
-	$('#feedback').empty();
-	
-	$attempt.each(function(i) {
-		//classList not supported in IE8/9
-		//var attempt = this.classList;
-		//var answer = $answer[i].classList;
-		var attemptClasses = this.className;
-		var answerClasses = $answer[i].className;
-		var attemptArray = attemptClasses.split(' ').sort();
-		var answerArray = answerClasses.split(' ').sort();
+    if (GLOBAL.inTool && !$(e.target).hasClass('preview')) {
+        $selection = $('#highlight');
+    }
 
-		if (attemptArray.length !== answerArray.length) {
-			$('#feedback').html('Wrong!');
-			return false;
-		}
-		
-		for (var i = 0; i < attemptArray.length; i++) {
-			//Don't check spaces if set to manually select or no select.
+    removeHighlight($selection.find('span'));
 
-			if (attemptArray[i] !== answerArray[i]) { 
-				$('#feedback').html('Wrong!');
-				return false;   
-			}           
-		}
-		
-		//Must be correct...
-		$('#feedback').html('Correct!');
+    $('.block').removeClass('highlighted');
 
-		//Partially correct response!?
-		
-		//Show correct answer as well as text version
-		
-		//The following text is highlighted in yellow...
-		//The following text is highlighted in green...
-	})
-}
-	
-function reset() {
-	/*$.each(colours, function(i, val) {
-		$spans.removeClass(val);
-	});*/
-	removeHighlight(GLOBAL.$spans);
+    if (GLOBAL.inTool) {
+        GLOBAL.pens = {};
+        getPensInUse();
+    }
 
-	$('#result').empty();
-}
-
-function selectPen(e) {
-	var id = e.currentTarget.id;
-
-	if (id !== 'eraser') {
-		var penColour = id.replace('_pen', '');
-		GLOBAL.currentColour = penColour;
-	} else {
-		GLOBAL.currentColour = 'eraser';
-	}
-
-	console.log(GLOBAL.currentColour);
-}
-
-function getSelection($span, start, end) {
-    var $prev = $span.prevUntil('.' + start);
-    var $next = $span.nextUntil('.' + end);
-
-    return $span.add($prev).add($next);
+    $('#result').empty();
 }
