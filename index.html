@@ -11,8 +11,8 @@
 		<!--<h1>Highlighting tool</h1>-->
 		<div id="tabs" role="tabpanel">
 			<ul class="nav nav-tabs" role="tablist">
-				<li role="presentation" class="active"><a href="#editor_tab" aria-controls="editor" role="tab" data-toggle="tab">Text editor</a></li>
-				<li role="presentation"><a href="#highlight_tab" aria-controls="highlight" role="tab" data-toggle="tab">Apply highlight</a></li>
+				<li role="presentation" class="active"><a href="#editor_tab" aria-controls="editor" role="tab" data-toggle="tab">Edit</a></li>
+				<li role="presentation"><a href="#highlight_tab" aria-controls="highlight" role="tab" data-toggle="tab">Configure</a></li>
 				<li role="presentation" class="disabled"><a href="#preview_tab" aria-controls="preview" role="tab" data-toggle="tab">Preview</a></li>
 				<li role="presentation"><a href="#upload_tab" aria-controls="upload" role="tab" data-toggle="tab">Upload</a></li>
 			</ul>
@@ -25,48 +25,71 @@
 					<input type="button" name="sample" value="Add sample text" />
 				</div>
 				<div role="tabpanel" class="tab-pane" id="highlight_tab">
-					<div id="configuration">
-						<div>Activity configuration</div>
-						<form action="js/data.js" method="POST" target="_blank">
-							<fieldset>
-								Highlight type:
-								<select name="type">
+					<div id="configuration" class="panel panel-default">
+						<div class="panel-heading">Options</div>
+						<form class="panel-body">
+							<div class="form-group">
+								<!--<label for="type">Highlight type:</label>-->
+								<label for="type">Highlight type:</label>
+								<select id="type" name="type" class="form-control">
 									<option value="char" selected>Character</option>
 									<option value="word">Word</option>
 									<option value="sentence">Sentence</option>
 									<option value="para">Paragraph</option>
 									<option value="custom">Custom</option>
 								</select>
-							</fieldset>
-							<fieldset>
-								Allow dragging:
-								<input type="radio" name="drag" value="yes" checked />Yes
-								<input type="radio" name="drag" value="No" />No
-							</fieldset>
-							<fieldset>
-								Include eraser:
-								<input type="radio" name="eraser" value="yes" checked />Yes
-								<input type="radio" name="eraser" value="No" />No
-							</fieldset>
-							<fieldset>
-								Handling of spaces: 
-								<select name="space_selection">
+							</div>
+							<div class="form-group">
+								<div class="checkbox">
+									<label><input type="checkbox" name="drag" checked="checked" />Allow dragging</label>
+								</div>
+								<div class="checkbox">
+									<label><input type="checkbox" name="eraser" checked="checked" />Include eraser</label>
+								</div>
+								<div class="checkbox">
+									<label><input type="checkbox" name="spaces" />Mark spaces</label>
+								</div>
+								<div class="checkbox">
+									<label><input type="checkbox" name="punctuation" />Mark punctuation</label>
+								</div>
+							</div>
+							<div class="form-group">
+								<!--<label for="space_selection">Handling of spaces:</label>
+								<select id="space_selection" class="form-control">
 									<option value="auto">Automatically selectable (recommended)</option>
 									<option value="manual">Manually selectable</option>
 									<option value="not">Not selectable</option>
-								</select>
-							</fieldset>
-							<fieldset>
-								Check the following when marking (info):<br />
-								<input type="checkbox" name="spaces" />Spaces<br />
-								<input type="checkbox" name="punctuation" />Punctuation
-							</fieldset>
+								</select>-->
+								<div class="form_info">Handling of spaces:<span class="info">i</span></div>
+								<div class="radio">
+									<label><input type="radio" name="space-selection" value="auto">Automatic</label>
+								</div>
+								<div class="radio">
+									<label><input type="radio" name="space-selection" value="manual" checked="checked">Manual</label>
+								</div>
+								<div class="radio disabled">
+									<label><input type="radio" name="space-selection" value="not">Unselectable</label>
+								</div>
+							</div>
 						</form>
 					</div>
-					
-					<div class="buttons"></div>
-					<div id="highlight" class="highlightable noselect"></div>
-					<input class="reset" type="button" value="Reset" />
+					<div class="panel panel-default">
+						<div class="panel-heading">Additional functionality</div>
+						<div class="panel-body">
+							<div class="checkbox">
+								<label><input type="checkbox" name="pre" />Pre-highlight</label>
+							</div>
+							<div class="checkbox">
+								<label><input type="checkbox" name="custom" />Custom highlight</label>
+							</div>
+						</div>
+					</div>
+					<div id="preview-activity">
+						<div class="buttons">
+						</div>
+						<div id="highlight" class="highlightable noselect"></div>
+						<input class="reset" type="button" value="Reset" />
+					</div>
 				</div>
 				<div role="tabpanel" class="tab-pane disabled" id="preview_tab">
 					<div class="buttons"></div>
@@ -98,7 +121,7 @@
 	<div id="sample_html" class="hidden">
 		<h1>HTML Ipsum Presents</h1>
 
-		<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et malesuada fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
+		<p><strong>Pellentesque habitant morbi tristique</strong> senectus et netus et <strong>malesuada</strong> fames ac turpis egestas. Vestibulum tortor quam, feugiat vitae, ultricies eget, tempor sit amet, ante. Donec eu libero sit amet quam egestas semper. <em>Aenean ultricies mi vitae est.</em> Mauris placerat eleifend leo. Quisque sit amet est et sapien ullamcorper pharetra. Vestibulum erat wisi, condimentum sed, <code>commodo vitae</code>, ornare sit amet, wisi. Aenean fermentum, elit eget tincidunt condimentum, eros ipsum rutrum orci, sagittis tempus lacus enim ac dui. <a href="#">Donec non enim</a> in turpis pulvinar facilisis. Ut felis.</p>
 
 		<h2>Header Level 2</h2>
 				   

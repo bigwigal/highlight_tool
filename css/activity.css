@@ -1,5 +1,4 @@
 body {
-	max-width: 900px;
 	/*width: 860px;*/
 	/*font: .9em arial;*/
 	line-height: 1.5;
@@ -10,6 +9,9 @@ fieldset {
 }
 input[type="button"] {
 	margin-top: 10px;
+}
+#editor_tab {
+    max-width: 900px;
 }
 #generate {
 	/*float: right;*/
@@ -49,29 +51,31 @@ input[type="button"] {
 .white {
 	background-color: #ffffff;
 }
-.colourbutton {
+.pen {
     width: 120px;
 }
-.buttons div {
+.pen,
+.eraser {
 	display: inline-block;
 	vertical-align: top;
 	/*height: 35px;*/
 	border: 1px solid #999999;
 	padding: 4px;
 	margin-right: 5px;
+    margin-bottom: 5px;
 }
 .buttons img,
 .buttons span,
 .buttons textarea {
 	vertical-align: top;
 }
-.colourbutton span {
+.pen span {
 	/*display: block;*/
 	width: 70px;
 	margin-left: 4px;
 	word-wrap: break-word;
 }
-.buttons textarea {
+.pen textarea {
 	width: 100%;
 	margin-top: 4px;
 	resize: none;
@@ -80,8 +84,8 @@ input[type="button"] {
 	/*margin-left: 4px;*/
 	/*font-size: .6em;*/
 }
-.disabled {
-    pointer-events: none;
+.buttons .checkbox label {
+    display: block;
 }
 .highlightable {
 	cursor: text;
@@ -96,4 +100,29 @@ input[type="button"] {
 	-moz-user-select: none;
 	-ms-user-select: none;
 	user-select: none;
+}
+#preview-activity {
+    max-width: 800px;
+    margin-left: 215px;
+}
+.panel {
+    float: left;
+    clear: both;
+    width: 200px;
+}
+label {
+    font-weight: normal;
+}
+.info {
+    display: none;
+    position: relative;
+    /*display: inline-block;*/
+    height: 20px;
+    width: 20px;
+    border: 2px solid #dddddd;
+    /*background-color: #dddddd;*/
+    border-radius: 10px;
+    padding-left: 7px;
+    font-weight: bold;
+    /*text-align: center;*/
 }

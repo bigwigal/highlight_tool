@@ -5,6 +5,12 @@
     <title>Highlighting</title>
 	<link href="bootstrap-3.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
 	<link rel="stylesheet" type="text/css" href="css/activity.css" />
+	<style>
+		#change-type {
+			margin-top: 30px;
+			border-top: 1px solid #ccd5d7;
+		}
+	</style>
 </head>
 <body>
 	<div>
@@ -16,7 +22,25 @@
 		<input class="reset" type="button" value="Reset" />
 		<div id="feedback"></div>
 	</div>
+	<div id="change-type">
+		<input type="button" value="Character" name="char" class="act-type" />
+		<input type="button" value="Word" name="word" class="act-type" />
+		<input type="button" value="Sentence" name="sent" class="act-type" />
+		<input type="button" value="Paragraph" name="para" class="act-type" />
+	</div>
 <script type="text/javascript" src="js/jquery-1.11.2.min.js"></script>
 <script type="text/javascript" src="js/activity.js"></script>
+<script>
+	$(document).ready(function() {
+		$('.act-type').on('click', function() {
+			var json = 'data/' + this.name + '.json';
+
+			$.getJSON(json, function(json) {
+				setGlobal(json);
+				initActivity();
+			});
+		});
+	});
+</script>
 </body>
 </html>

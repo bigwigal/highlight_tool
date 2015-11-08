@@ -1,6 +1,6 @@
 var GLOBAL = {
     highlightType: null,
-    currentColour: 'yellow',
+    currentPen: 'yellow',
     dragging: true,
     allPens: {
         yellow: {},
@@ -20,22 +20,24 @@ var GLOBAL = {
     inTool: true,
     initialGenerate: true,
     $spans: null,
-    $tiny: null
+    $tiny: null,
+    preHighlight: false
 };
 
 $(document).ready(function() {
     initTiny();
 
-    $('#highlight_tab').find('.buttons').html(getButtonHTML());
+    $('#highlight_tab').find('.buttons').prepend(getButtonHTML());
 
     //$('#highlight_tab .buttons div:not(#eraser)').append('<textarea class="pen_label" rows="2" maxlength="25" />');
     $('.buttons').find('textarea').each(function() {
         maxLength(this);
     });
 
-    GLOBAL.highlightType = 'word';
-    //GLOBAL.highlightType = $('select[name="type"] option:selected').val();
+    //GLOBAL.highlightType = 'word';
+    GLOBAL.highlightType = $('select[name="type"] option:selected').val();
     GLOBAL.spaceSelection = $('select[name="space_selection"] option:selected').val();
+    //$('input[value="manual"]').prop('checked', true);
 
     //console.log(GLOBAL);
 
@@ -49,13 +51,14 @@ $(document).ready(function() {
     $('#data').on('change', handleFileSelect);
     $('#upload').on('click', uploadJSON);
 
-    $('select[name="space_selection"]').on('change', handleSpaces);
+    $('select[name="type"]').on('change', changeType); //TODO set standard configurations per type??
     $('input[name="sample"]').on('click', function() { GLOBAL.$tiny.html($('#sample_html').html()); }).trigger('click');
     $('input[name="drag"]').on('change', function() { GLOBAL.dragging = !GLOBAL.dragging; });
     $('input[name="eraser"]').on('change', function() { GLOBAL.eraser = !GLOBAL.eraser; });
     $('input[name="spaces"]').on('change', function() { GLOBAL.markSpaces = !GLOBAL.markSpaces; });
     $('input[name="punctuation"]').on('change', function() { GLOBAL.markPunctuation = !GLOBAL.markPunctuation; });
-    $('select[name="type"]').on('change', changeType); //TODO set standard configurations per type??
+    $('input[name="pre"]').on('change', function() { GLOBAL.preHighlight = !GLOBAL.preHighlight; console.log(GLOBAL.preHighlight); });
+    $('input[name="space-selection"]').on('change', handleSpaces);
 });
 
 /**TODO check tab behaviour:
@@ -67,6 +70,8 @@ $(document).ready(function() {
  **/
 
 //TODO CHECK: Upload - events on buttons only.
+//TODO add prehighlight and distrator(?) options
+
 
 function initTool() {}
 
@@ -124,16 +129,17 @@ function spanCharacters(el) {
 
 function spanBlocks(el) {
     var $block = $();
-    //blocks defined by highlight type
+    var blockHTML = '<span class="block" tabindex="1"></span>';
 
-    //keep chars spanned to hold colour info when editing and switching between types
-    //remove at edit text and rerun at generate text (and each time the type is changed??)
+    //TODO custom? - this could be done post markup (leave until preview and then grab what's marked up)??
+    //TODO predefined - highlightable text limited - just needs to be a config setting (only highlighted text highlightable)
 
-    //custom - this could be done post markup (leave until preview and then grab what's marked up )??
+    //console.log(GLOBAL.highlightType);
 
     switch (GLOBAL.highlightType) {
         case 'char':
-            $(el).find('span').attr('tabindex', '1');
+            //$(el).find('span').attr('tabindex', '1').addClass('block');
+            $(el).find('span').not('.punct, .space').wrap(blockHTML);
             break;
         case 'word':
             $(el).find('span').each(function() {
@@ -147,7 +153,7 @@ function spanBlocks(el) {
                         $block = $block.add($(this));
                     }
 
-                    $block.wrapAll('<span class="block" tabindex="1"></span>');
+                    $block.wrapAll(blockHTML);
                     $block = $();
                 }
             });
@@ -179,7 +185,7 @@ function spanBlocks(el) {
                                         $block = $block.not(':eq(0)');
                                     }
 
-                                    $block.wrapAll('<span class="block" tabindex="1"></span>');
+                                    $block.wrapAll(blockHTML);
 
                                     return false;
                                 }
@@ -187,7 +193,7 @@ function spanBlocks(el) {
                         });
                     }
                     else {
-                        $parent.wrapInner('<span class="block" tabindex="1"></span>');
+                        $parent.wrapInner(blockHTML);
                     }
                     return false;
                 }
@@ -199,7 +205,7 @@ function spanBlocks(el) {
                     spanBlocks(this);
                 }
                 else {
-                    $(this).parent().wrapInner('<span class="block" tabindex="1"></span>');
+                    $(this).parent().wrapInner(blockHTML);
                     return false;
                 }
             });
@@ -208,13 +214,45 @@ function spanBlocks(el) {
 }
 
 function removeBlocks(html) {
-    var $html = $('<div></div>').html(html);
+    var $html = html ? $('<div></div>').html(html) : $('#highlight');
 
     $html.find('.block').each(function() {
         $(this).children().unwrap();
     });
 
     return $html.html();
+}
+
+function changeType() { //TODO should each config have it's on object??
+    var defaultSpaceSelection = {
+        char: 'manual',
+        word: 'auto',
+        sentence: 'auto',
+        para: 'not'
+    };
+
+    /*if (GLOBAL.highlightType === 'char') {
+        $('#highlight').find('span').removeClass('.block');
+    }
+    else {
+        $('#highlight').find('.block').each(function() {
+            $(this).children().unwrap();
+        });
+    }*/
+
+    //console.log(this.value);
+
+    removeBlocks();
+
+    GLOBAL.highlightType = this.value;
+
+    //console.log(defaultSpaceSelection[GLOBAL.highlightType]);
+
+    $('input[value="' + defaultSpaceSelection[GLOBAL.highlightType] + '"]').prop('checked', true).trigger('change');
+
+    $('#highlight').find('span').removeAttr('tabindex');
+
+    spanBlocks('#highlight')
 }
 
 function classNonAlphaNumericChars() {
@@ -265,6 +303,8 @@ function generateHighlightText() { //TODO set this to only fire when leaving edi
     //var tinyHTML = GLOBAL.$tiny.html();
     var tinyHTML = decodeURI(GLOBAL.answer);
 
+    GLOBAL.inTool = true;
+
     $('a[href="#preview_tab"]').parent().add('#preview_tab').removeClass('disabled');
 
     $('#highlight').html(tinyHTML);
@@ -274,6 +314,7 @@ function generateHighlightText() { //TODO set this to only fire when leaving edi
     spanBlocks('#highlight');
 
     if (GLOBAL.initialGenerate) {
+        $('input[name="space-selection"]').filter(':checked').trigger('change');
         $('a[href="#preview"]').parent().removeClass('disabled');
         GLOBAL.initialGenerate = false;
     }
@@ -283,31 +324,47 @@ function saveHighlightData() {
     var $questionText = $('#highlight').clone();
     var pensUsed = getPensInUse();
 
-    $.each(pensUsed, function(key, val) {
-        $questionText.find('span').removeClass(key);
+    $.each(pensUsed, function(key) {
+        //$questionText.find('span').removeClass(key);
+        $questionText.find('span.' + key).each(function() {
+            var $this = $(this);
+
+            if (!$this.hasClass('prehighlight')) {
+                $this.removeClass(key);
+            }
+        })
     });
 
     GLOBAL.question = encodeURI($questionText.html());
     GLOBAL.answer = encodeURI($('#highlight').html());
 
     $('.pen_label').each(function() {
-        var labelText = this.value;
+        var labelText = '';
         var penColour = this.parentNode.id.replace('_pen', '');
 
-        if (labelText.length > 0) {
+        if (GLOBAL.pens[penColour]) {
+            if (this.value.length > 0) {
+                labelText = this.value;
+            }
+
             GLOBAL.pens[penColour]['label'] = labelText;
         }
     });
 
-    //console.log(GLOBAL.pens);
 }
 
+//write isPenInUse()
+
 function generatePreview() {
-    var buttonHTML = getButtonHTML(true);
+    var $preview = $('#preview_tab');
 
-    $('#preview_tab .buttons').html(buttonHTML);
+    GLOBAL.inTool = false;
 
-    initActivity();
+     $('input[name="pre"]').trigger('change').prop('checked', false);
+
+    $preview.find('.buttons').html(getButtonHTML());
+    $preview.find('#question').html(decodeURI(GLOBAL.question));
+    $preview.find('#answer').html(decodeURI(GLOBAL.answer));
 }
 
 function generateJSON() {
@@ -369,33 +426,31 @@ function getPensInUse() {
 }
 
 function handleSpaces(e) {
-    var $spaces = $('.space:not(.block .space)');
+    var $spaces = $('.space');
+
+    console.log(e.target.value);
 
     GLOBAL.spaceSelection = e.target.value;
 
     if (GLOBAL.spaceSelection === 'auto') {
-        autoSelectSpaces();
-    }
+        var currentPen = GLOBAL.currentPen;
+        var pens = getPensInUse();
 
-    if (GLOBAL.spaceSelection === 'manual') {
+        for (var key in pens) {
+            GLOBAL.currentPen = key;
+
+            autoSelectSpaces($('.block.' + GLOBAL.currentPen));
+        }
+
+        GLOBAL.currentPen = currentPen;
+    }
+    else if (GLOBAL.spaceSelection === 'manual') {
         $spaces.attr('tabindex', '1');
     }
     else {
         removeHighlight($spaces);
-        $spaces.removeAttribute('tabindex');
+        $spaces.removeAttr('tabindex');
     }
-}
-
-function changeType() {
-    GLOBAL.highlightType = $(this).val();
-
-    $('#highlight').find('.block').each(function() {
-        $(this).children().unwrap();
-    });
-
-    $('#highlight span').removeAttr('tabindex');
-
-    spanBlocks('#highlight')
 }
 
 function maxLength(el) {

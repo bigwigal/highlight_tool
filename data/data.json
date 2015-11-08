@@ -1,4 +1,5 @@
 {
+  "highlightType": "word",
   "dragging": true,
   "eraser": true,
   "spaceSelection": "auto",

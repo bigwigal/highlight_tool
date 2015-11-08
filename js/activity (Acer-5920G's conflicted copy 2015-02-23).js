@@ -87,8 +87,8 @@ function autoSelectSpaces($selection) {
         var $nextBlock = $thisBlock.nextAll('.block:first');
 
         if ($prevBlock.length > 0 && $prevBlock.hasClass('highlighted')) {
-            if ($prevBlock.hasClass(GLOBAL.currentColour)) {
-                $thisBlock.prev().addClass(GLOBAL.currentColour);
+            if ($prevBlock.hasClass(GLOBAL.currentPen)) {
+                $thisBlock.prev().addClass(GLOBAL.currentPen);
             }
             else {
                 removeHighlight($thisBlock.prev());
@@ -96,8 +96,8 @@ function autoSelectSpaces($selection) {
         }
 
         if ($nextBlock.length > 0 && $nextBlock.hasClass('highlighted')) {
-            if ($nextBlock.hasClass(GLOBAL.currentColour)) {
-                $thisBlock.next().addClass(GLOBAL.currentColour);
+            if ($nextBlock.hasClass(GLOBAL.currentPen)) {
+                $thisBlock.next().addClass(GLOBAL.currentPen);
             }
             else {
                 removeHighlight($thisBlock.next());
@@ -128,11 +128,11 @@ function highlight() {
 
         $toHighlight = $thisBlock.find('span').addBack();
     }
-    if (GLOBAL.currentColour !== 'eraser') {
+    if (GLOBAL.currentPen !== 'eraser') {
         removeHighlight($toHighlight);
 
 		$toHighlight
-            .addClass(GLOBAL.currentColour);
+            .addClass(GLOBAL.currentPen);
 
         if (GLOBAL.dragging) {
             $('.highlightable').on('mouseover', 'span', function () {
@@ -141,7 +141,7 @@ function highlight() {
                 console.log('dragging');
                 //TODO spaces not auto highlighted when dragging
 
-                $toHighlight.addClass(GLOBAL.currentColour);
+                $toHighlight.addClass(GLOBAL.currentPen);
             });
         }
     } else {
@@ -248,12 +248,12 @@ function selectPen(e) {
 
 	if (id !== 'eraser') {
 		var penColour = id.replace('_pen', '');
-		GLOBAL.currentColour = penColour;
+		GLOBAL.currentPen = penColour;
 	} else {
-		GLOBAL.currentColour = 'eraser';
+		GLOBAL.currentPen = 'eraser';
 	}
 
-	console.log(GLOBAL.currentColour);
+	console.log(GLOBAL.currentPen);
 }
 
 function getSelection($span, start, end) {
